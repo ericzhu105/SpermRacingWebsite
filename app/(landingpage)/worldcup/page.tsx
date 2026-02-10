@@ -32,16 +32,6 @@ const WorldCupPage = () => {
       <div className="fixed inset-0 pointer-events-none bg-gradient-to-b from-[#0a0a0a] via-[#0f0f0f] to-[#0a0a0a]" />
       
       <div className="max-w-[680px] w-full relative z-10">
-        {/* Logo */}
-        <div className="mb-12 md:mb-16 flex justify-center">
-          <Image
-            src="/images/logo/mainLogo.png"
-            alt="Sperm Racing Logo"
-            width={120}
-            height={120}
-            className="opacity-95"
-          />
-        </div>
 
         {/* Headline */}
         <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-[1.1] tracking-tight text-white">
@@ -362,24 +352,30 @@ const WorldCupPage = () => {
               {/* Animated elegant outer glow */}
               <div className="absolute -inset-1 bg-gradient-to-r from-[#FF361D]/20 via-[#FF361D]/40 to-[#FF361D]/20 rounded-2xl blur-2xl opacity-60 group-hover:opacity-90 transition-opacity duration-700 animate-pulse" />
               
-              {/* Animated border light effect - travels around all edges */}
-              <div className="absolute inset-0 rounded-2xl" style={{ padding: '2px' }}>
+              {/* Animated border light effect - fuller light travels around all edges */}
+              <div className="absolute inset-0 rounded-2xl overflow-hidden">
                 <div 
                   className="absolute inset-0 rounded-2xl"
                   style={{
                     background: `conic-gradient(
                       from 0deg,
-                      transparent 0deg,
-                      transparent 340deg,
-                      #FF361D 350deg,
-                      #ff6b4a 360deg,
-                      transparent 10deg,
-                      transparent 360deg
+                      #FF361D 0deg,
+                      #ff6b4a 30deg,
+                      rgba(255, 54, 29, 0.6) 60deg,
+                      rgba(255, 54, 29, 0.3) 90deg,
+                      transparent 120deg,
+                      transparent 240deg,
+                      rgba(255, 54, 29, 0.3) 270deg,
+                      rgba(255, 54, 29, 0.6) 300deg,
+                      #ff6b4a 330deg,
+                      #FF361D 360deg
                     )`,
-                    animation: 'spin 3s linear infinite',
+                    animation: 'spin 4s linear infinite',
+                    padding: '3px',
                   }}
-                />
-                <div className="absolute inset-[3px] rounded-2xl bg-[#0a0a0a]" />
+                >
+                  <div className="w-full h-full rounded-2xl bg-[#0a0a0a]" />
+                </div>
               </div>
               
               {/* Double border effect */}
