@@ -14,6 +14,11 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/ut', request.url));
   }
 
+  // Handle case-insensitive iCup routes
+  if (pathname.toLowerCase() === '/icup' && pathname !== '/icup') {
+    return NextResponse.redirect(new URL('/icup', request.url));
+  }
+
   return NextResponse.next();
 }
 
