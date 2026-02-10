@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { League_Gothic } from 'next/font/google';
 import localFont from 'next/font/local';
 import Image from 'next/image';
@@ -36,8 +36,53 @@ export default function MethodologyPage() {
   const fontFamily = monoFont.style.fontFamily;
   const titleFont = leagueGothic.style.fontFamily;
 
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      // Listen for YouTube player state changes
+      if (event.origin === 'https://www.youtube.com') {
+        try {
+          const data = JSON.parse(event.data);
+          if (data.event === 'onStateChange') {
+            // YouTube player states:
+            // -1 (unstarted), 0 (ended), 1 (playing), 2 (paused), 3 (buffering), 5 (video cued)
+            const playerState = data.info;
+            if (playerState === 1 || playerState === 3) {
+              // Video is playing or buffering (hide overlay during seeking)
+              setIsPlaying(true);
+            } else if (playerState === 2 || playerState === 0) {
+              // Video is paused or ended
+              setIsPlaying(false);
+            }
+          }
+        } catch (e) {
+          // Ignore parsing errors
+        }
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+
+    // Subscribe to state change events once iframe is loaded
+    const timer = setTimeout(() => {
+      if (playerRef.current?.contentWindow) {
+        playerRef.current.contentWindow.postMessage(
+          JSON.stringify({
+            event: 'listening',
+            id: 'player',
+            channel: 'widget'
+          }),
+          '*'
+        );
+      }
+    }, 1000);
+
+    return () => {
+      window.removeEventListener('message', handleMessage);
+      clearTimeout(timer);
+    };
+  }, []);
+
   const handlePlayClick = () => {
-    setIsPlaying(true);
     if (playerRef.current?.contentWindow) {
       playerRef.current.contentWindow.postMessage(
         JSON.stringify({
@@ -85,7 +130,7 @@ export default function MethodologyPage() {
             <iframe
               ref={playerRef}
               className="w-full h-full"
-              src="https://www.youtube.com/embed/e5i2HJr8-pA?enablejsapi=1&rel=0&modestbranding=1&playsinline=1"
+              src={`https://www.youtube.com/embed/e5i2HJr8-pA?enablejsapi=1&rel=0&modestbranding=1&playsinline=1&origin=${typeof window !== 'undefined' ? window.location.origin : ''}`}
               title="Sperm Racing Methodology"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
