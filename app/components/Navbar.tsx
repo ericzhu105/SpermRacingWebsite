@@ -34,6 +34,7 @@ export default function Navbar() {
     // { name: 'LIVESTREAM', href: '/races' },
     { name: 'MANIFESTO', href: '/manifesto' },
     { name: 'PROCESS', href: '/methodology' },
+    { name: 'WORLD CUP', href: '/worldcup' },
     // { name: 'ATHLETES', href: '/team' },
     // { name: 'TRACKS', href: '/tracks' },
     // { name: 'MERCH', href: '/merch' },

@@ -32,6 +32,7 @@ const leagueGothic = League_Gothic({
 export default function MethodologyPage() {
   const [isPlaying, setIsPlaying] = useState(false);
   const playerRef = useRef<HTMLIFrameElement | null>(null);
+  const pauseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const fontFamily = monoFont.style.fontFamily;
   const titleFont = leagueGothic.style.fontFamily;
@@ -46,11 +47,23 @@ export default function MethodologyPage() {
             // YouTube player states:
             // -1 (unstarted), 0 (ended), 1 (playing), 2 (paused), 3 (buffering), 5 (video cued)
             const playerState = data.info;
+            
+            // Clear any pending pause timeout
+            if (pauseTimeoutRef.current) {
+              clearTimeout(pauseTimeoutRef.current);
+              pauseTimeoutRef.current = null;
+            }
+            
             if (playerState === 1 || playerState === 3) {
               // Video is playing or buffering (hide overlay during seeking)
               setIsPlaying(true);
-            } else if (playerState === 2 || playerState === 0) {
-              // Video is paused or ended
+            } else if (playerState === 2) {
+              // Video is paused - wait a bit to see if it's just seeking
+              pauseTimeoutRef.current = setTimeout(() => {
+                setIsPlaying(false);
+              }, 300); // 300ms delay to avoid flickering during seeks
+            } else if (playerState === 0) {
+              // Video ended - show overlay immediately
               setIsPlaying(false);
             }
           }
@@ -79,6 +92,9 @@ export default function MethodologyPage() {
     return () => {
       window.removeEventListener('message', handleMessage);
       clearTimeout(timer);
+      if (pauseTimeoutRef.current) {
+        clearTimeout(pauseTimeoutRef.current);
+      }
     };
   }, []);
 
