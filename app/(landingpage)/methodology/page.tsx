@@ -141,18 +141,18 @@ export default function MethodologyPage() {
                 className="text-xs md:text-sm text-gray-300 leading-relaxed max-w-xl"
                 style={{ fontFamily }}
               >
-                Cygnus Photonics builds the light-processing hardware that lets us
-                actually see the race. Their photonics platform powers the
-                high-speed illumination and imaging we use to track every sperm on
-                the microscopic racetrack in real time.
               </p>
               <p
                 className="text-xs md:text-sm text-gray-400 leading-relaxed max-w-xl"
                 style={{ fontFamily }}
               >
-                We work closely with their team to tune optics, sensors, and
-                signal processing so that every frame of the broadcast is clean,
-                accurate, and race-ready—no lab goggles required.
+                Cygnus Photonics builds the light generating
+                hardware that lets us seal the race track. Their photonics platform
+                activates the material surfaces at the molecular level, allowing
+                the race tracks to be permanently sealed without adhesives or heat.
+                We work closely with their team to tune optics, sensors, and signal
+                processing so that every frame of the broadcast is clean, accurate,
+                and race-ready—no lab goggles required.
               </p>
               <a
                 href="http://cygnusphoton.com/"
@@ -161,8 +161,7 @@ export default function MethodologyPage() {
                 className="inline-flex items-center gap-2 text-[10px] md:text-xs tracking-[0.25em] uppercase text-gray-400 hover:text-white transition-colors"
                 style={{ fontFamily }}
               >
-                Visit Cygnus Photonics
-                <span className="text-[#FF361D]">↗</span>
+                VISIT CYGNUS PHOTONICS
               </a>
             </div>
 
