@@ -62,13 +62,13 @@ export default function Footer() {
           >
             The Sport Behind<br />Men's Health.
           </h2>
-          <Link href="/races">
+          <Link href="/methodology">
             <Button 
                 className="bg-white text-[#FF361D] hover:bg-white/90 font-bold tracking-wider px-8 py-6 h-14 rounded-none uppercase min-w-[240px] w-full md:w-auto"
                 style={{ fontFamily }}
             >
                 <span className="mr-2"><Tv className="h-5 w-5" /></span>
-                Watch Live
+                How It Works
             </Button>
           </Link>
 

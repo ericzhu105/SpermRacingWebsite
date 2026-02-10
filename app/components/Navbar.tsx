@@ -170,13 +170,13 @@ export default function Navbar() {
               Get Notified
             </Button>
 
-            <Link href="/races" className="w-full" onClick={() => setIsMenuOpen(false)}>
+            <Link href="/methodology" className="w-full" onClick={() => setIsMenuOpen(false)}>
               <Button 
                 className="rounded-none bg-white text-black hover:bg-white/90 px-8 py-6 w-full uppercase tracking-wider font-bold text-xs flex items-center justify-center gap-2"
                 style={{ fontFamily }}
               >
                 <Tv className="w-3 h-3" />
-                Watch Live
+                How It Works
               </Button>
             </Link>
           </div>

@@ -193,10 +193,10 @@ export default function HomePage() {
                         </DialogContent>
                     </Dialog>
 
-                    <Link href="/races" className="w-full">
+                    <Link href="/methodology" className="w-full">
                         <Button className="rounded-none bg-white text-black hover:bg-white/90 px-8 py-6 w-full uppercase tracking-wider font-bold text-[10px] flex items-center justify-center gap-2" style={{ fontFamily }}>
                             <span className="mb-0.5"><Tv className="w-3 h-3" /></span>
-                            Watch Live
+                            How It Works
                         </Button>
                     </Link>
                 </div>
