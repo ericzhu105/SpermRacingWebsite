@@ -125,6 +125,9 @@ importers:
       firebase:
         specifier: ^11.5.0
         version: 11.10.0
+      forminit:
+        specifier: ^0.2.4
+        version: 0.2.4(next@15.5.7(react-dom@19.2.1(react@19.2.1))(react@19.2.1))
       input-otp:
         specifier: 1.4.1
         version: 1.4.1(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
@@ -1692,6 +1695,15 @@ packages:
 
   firebase@11.10.0:
     resolution: {integrity: sha512-nKBXoDzF0DrXTBQJlZa+sbC5By99ysYU1D6PkMRYknm0nCW7rJly47q492Ht7Ndz5MeYSBuboKuhS1e6mFC03w==}
+
+  forminit@0.2.4:
+    resolution: {integrity: sha512-p7GyP2dz4zIONMmETANUBK36KFr+Td8qwOX6Zn/+eeBvf023Zr5aRv2d46bsFlFRhwrhnpojizw9tHwhAvplYw==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      next: 15.5.7
+    peerDependenciesMeta:
+      next:
+        optional: true
 
   fraction.js@5.3.4:
     resolution: {integrity: sha512-1X1NTtiJphryn/uLQz3whtY6jK3fTqoE3ohKs0tT+Ujr1W59oopxmoEh7Lu5p6vBaPbgoM0bzveAW4Qi5RyWDQ==}
@@ -3850,6 +3862,10 @@ snapshots:
       '@firebase/util': 1.12.1
     transitivePeerDependencies:
       - '@react-native-async-storage/async-storage'
+
+  forminit@0.2.4(next@15.5.7(react-dom@19.2.1(react@19.2.1))(react@19.2.1)):
+    optionalDependencies:
+      next: 15.5.7(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
 
   fraction.js@5.3.4: {}
 
