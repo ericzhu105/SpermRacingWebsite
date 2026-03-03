@@ -69,9 +69,7 @@ const WorldCupPage = () => {
         {/* Application Link */}
         <div className="mb-20 pb-20 border-b border-[#1a1a1a]">
           <Link 
-            href="https://docs.google.com/forms/d/1o5UL9AMReId0FogEeLovJ1rLMG_982Ec601WB3qTOSM/edit"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/submissions"
             className="inline-block"
           >
             <Button 
@@ -580,9 +578,7 @@ const WorldCupPage = () => {
                 Join athletes from <span className="text-white font-semibold">128 countries</span> competing for <span className="text-[#FF361D] font-bold">$100,000</span>
               </p>
               <Link 
-                href="https://docs.google.com/forms/d/1o5UL9AMReId0FogEeLovJ1rLMG_982Ec601WB3qTOSM/edit"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/submissions"
                 className="inline-block"
               >
                 <Button 
