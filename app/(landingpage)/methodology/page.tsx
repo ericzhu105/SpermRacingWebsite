@@ -99,6 +99,7 @@ export default function MethodologyPage() {
   }, []);
 
   const handlePlayClick = () => {
+    setIsPlaying(true);
     if (playerRef.current?.contentWindow) {
       playerRef.current.contentWindow.postMessage(
         JSON.stringify({
@@ -115,7 +116,9 @@ export default function MethodologyPage() {
     <main className="min-h-screen bg-black text-white flex flex-col overflow-x-hidden">
       <div className="flex-1 flex flex-col pt-24 pb-12 px-4 md:px-8 lg:px-12 w-full">
         {/* Mobile: Title Above Video */}
-        <div className="md:hidden mb-6 flex flex-col items-center text-center">
+        <div className={`md:hidden mb-6 flex flex-col items-center text-center transition-all duration-500 ${
+          isPlaying ? 'opacity-0 h-0 mb-0 overflow-hidden' : 'opacity-100'
+        }`}>
           <button
             onClick={handlePlayClick}
             className="flex items-center gap-2 text-xs font-bold mb-4 text-white hover:text-[#FF361D] transition-colors tracking-widest uppercase"
