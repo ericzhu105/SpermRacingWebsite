@@ -13,6 +13,46 @@ function isValidIPv6(ip: string) {
   return /^[0-9a-fA-F:]+$/.test(ip) && ip.length <= 45;
 }
 
+async function geoLookup(ip: string | null) {
+  // Primary: ip-api.com (45 req/min, no daily cap, no key needed)
+  try {
+    const url = ip ? `http://ip-api.com/json/${encodeURIComponent(ip)}` : 'http://ip-api.com/json/';
+    const res = await fetch(url, { signal: AbortSignal.timeout(4000) });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.status === 'success') {
+        return {
+          ip: data.query || ip || 'unknown',
+          city: data.city || '',
+          region: data.regionName || '',
+          country_name: data.country || '',
+          org: data.isp || '',
+        };
+      }
+    }
+  } catch { /* fall through */ }
+
+  // Fallback: ipapi.co
+  try {
+    const url = ip ? `https://ipapi.co/${encodeURIComponent(ip)}/json/` : 'https://ipapi.co/json/';
+    const res = await fetch(url, { signal: AbortSignal.timeout(4000) });
+    if (res.ok) {
+      const data = await res.json();
+      if (!data.error) {
+        return {
+          ip: data.ip || ip || 'unknown',
+          city: data.city || '',
+          region: data.region || '',
+          country_name: data.country_name || '',
+          org: data.org || '',
+        };
+      }
+    }
+  } catch { /* fall through */ }
+
+  return null;
+}
+
 export async function GET(request: NextRequest) {
   let clientIP =
     request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
@@ -20,7 +60,6 @@ export async function GET(request: NextRequest) {
     request.headers.get('cf-connecting-ip') ||
     '';
 
-  // Rate limit by requester IP
   const rateLimitKey = clientIP || 'unknown';
   const now = Date.now();
   const entry = RATE_LIMIT.get(rateLimitKey);
@@ -33,7 +72,6 @@ export async function GET(request: NextRequest) {
     RATE_LIMIT.set(rateLimitKey, { count: 1, resetAt: now + WINDOW_MS });
   }
 
-  // Clean up stale entries periodically
   if (RATE_LIMIT.size > 10000) {
     for (const [key, val] of RATE_LIMIT) {
       if (val.resetAt <= now) RATE_LIMIT.delete(key);
@@ -42,30 +80,18 @@ export async function GET(request: NextRequest) {
 
   const isLocal = !clientIP || clientIP === '::1' || clientIP === '127.0.0.1';
 
-  // Validate IP format to prevent SSRF
   if (!isLocal && !isValidIPv4(clientIP) && !isValidIPv6(clientIP)) {
     clientIP = '';
   }
 
-  let geo: any = {};
-  try {
-    const url = isLocal || !clientIP
-      ? 'https://ipapi.co/json/'
-      : `https://ipapi.co/${encodeURIComponent(clientIP)}/json/`;
-    const res = await fetch(url, { signal: AbortSignal.timeout(4000) });
-    if (res.ok) {
-      geo = await res.json();
-      if (isLocal || !clientIP) clientIP = geo.ip || 'unknown';
-    }
-  } catch {
-    // Geo lookup failed
-  }
+  // Pass null for local dev so the API auto-detects the server's public IP
+  const geo = await geoLookup(isLocal ? null : clientIP || null);
 
   return NextResponse.json({
-    ip: clientIP || 'unknown',
-    city: String(geo.city || '').slice(0, 100),
-    region: String(geo.region || '').slice(0, 100),
-    country_name: String(geo.country_name || '').slice(0, 100),
-    org: String(geo.org || '').slice(0, 200),
+    ip: geo?.ip || clientIP || 'unknown',
+    city: String(geo?.city || '').slice(0, 100),
+    region: String(geo?.region || '').slice(0, 100),
+    country_name: String(geo?.country_name || '').slice(0, 100),
+    org: String(geo?.org || '').slice(0, 200),
   });
 }
