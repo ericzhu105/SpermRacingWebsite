@@ -7,6 +7,10 @@ const RATE_LIMIT = new Map<string, { count: number; resetAt: number }>();
 const MAX_SUBMISSIONS = 3;
 const WINDOW_MS = 300_000; // 5 minutes
 
+if (!process.env.FORMINIT_API_KEY) {
+  console.error('FORMINIT_API_KEY is not set');
+}
+
 const forminit = createForminitProxy({
   apiKey: process.env.FORMINIT_API_KEY!,
 });

@@ -450,7 +450,13 @@ export default function SubmissionsPage() {
       });
 
       if (forminitError) {
-        alert(`Error: ${forminitError.message}`);
+        alert(`Submission failed: ${forminitError.message || 'Unknown error'}. Please try again.`);
+        setIsSubmitting(false);
+        return;
+      }
+
+      if (!data?.hashId) {
+        alert('Submission may have failed — no confirmation received. Please try again.');
         setIsSubmitting(false);
         return;
       }
