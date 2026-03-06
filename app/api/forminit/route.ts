@@ -7,13 +7,11 @@ const RATE_LIMIT = new Map<string, { count: number; resetAt: number }>();
 const MAX_SUBMISSIONS = 3;
 const WINDOW_MS = 300_000; // 5 minutes
 
-if (!process.env.FORMINIT_API_KEY) {
-  console.error('FORMINIT_API_KEY is not set');
-}
+const apiKey = process.env.FORMINIT_API_KEY;
 
-const forminit = createForminitProxy({
-  apiKey: process.env.FORMINIT_API_KEY!,
-});
+const forminit = apiKey
+  ? createForminitProxy({ apiKey })
+  : null;
 
 export async function POST(request: NextRequest) {
   // Server-side deadline check — can't be bypassed by changing client clock
@@ -49,6 +47,13 @@ export async function POST(request: NextRequest) {
     for (const [key, val] of RATE_LIMIT) {
       if (val.resetAt <= now) RATE_LIMIT.delete(key);
     }
+  }
+
+  if (!forminit) {
+    return NextResponse.json(
+      { error: 'CONFIG_ERROR', message: 'Server configuration error. FORMINIT_API_KEY is missing.' },
+      { status: 500 }
+    );
   }
 
   return forminit.POST(request);

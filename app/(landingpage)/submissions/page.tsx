@@ -196,12 +196,15 @@ export default function SubmissionsPage() {
   useEffect(() => {
     setMounted(true);
 
-    // Restore saved progress
+    // Restore saved progress — restore form data and completed steps,
+    // but start at the earliest incomplete step (not wherever they left off)
     const saved = loadSavedData();
     if (saved) {
       setFormData({ ...EMPTY_FORM_DATA, ...saved.formData });
-      if (saved.currentStep) setCurrentStep(saved.currentStep);
-      if (saved.completedSteps) setCompletedSteps(saved.completedSteps);
+      const completed: number[] = saved.completedSteps || [];
+      setCompletedSteps(completed);
+      const firstIncomplete = [1, 2, 3, 4].find(s => !completed.includes(s)) || 1;
+      setCurrentStep(firstIncomplete);
     }
     const token = Math.random().toString(36).substring(2) + Date.now().toString(36);
     setSessionToken(token);
