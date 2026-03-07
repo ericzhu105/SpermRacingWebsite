@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import Script from 'next/script';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { BackgroundProvider } from './context/BackgroundContext';
 import GlobalBlur from './components/GlobalBlur';
 import { PostHogProvider } from './providers';
@@ -102,6 +103,7 @@ export default function RootLayout({
               {children}
             </main>
             <Analytics />
+            <SpeedInsights />
           </PostHogProvider>
         </BackgroundProvider>
       </body>
