@@ -1,29 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-import localFont from 'next/font/local';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
 
 export const dynamic = 'force-dynamic';
 export const fetchCache = 'force-no-store';
-
-// Load Fonts
-const monoFont = localFont({
-  src: [
-    {
-      path: '../../../public/fonts/JetBrainsMono-Regular.woff2',
-      weight: '400',
-      style: 'normal',
-    },
-    {
-      path: '../../../public/fonts/JetBrainsMono-Bold.woff2',
-      weight: '700',
-      style: 'normal',
-    },
-  ],
-  variable: '--font-mono',
-});
 
 const WorldCupPage = () => {
   return (
@@ -34,52 +15,46 @@ const WorldCupPage = () => {
       <div className="max-w-[680px] w-full relative z-10">
 
         {/* Headline */}
-        <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-[1.1] tracking-tight text-white">
-          Sperm Racing CUP 2026
+        <h1 className="text-4xl md:text-6xl font-bold mb-4 leading-[1.1] tracking-tight text-white">
+          SR World Cup 2026
         </h1>
-        <h2 className="text-xl md:text-2xl text-[#a0a0a0] mb-16 font-light tracking-wide">
-          Athlete Participation Guidelines
-        </h2>
+        <p className="text-[#e0e0e0] text-lg md:text-xl leading-[1.7] mb-8">
+          <span className="text-white font-semibold">128 countries</span>. One champion. A <span className="text-[#FF361D] font-bold">$100,000</span> prize pool.
+        </p>
+
+        {/* Primary CTA */}
+        <div className="mb-10">
+          <Link
+            href="/submissions"
+            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-[#FF361D] text-white font-semibold text-base md:text-lg transition-all duration-200 hover:brightness-110 active:scale-[0.97]"
+          >
+            Apply Now
+          </Link>
+          <p className="text-[#666] text-sm mt-3">Applications close March 15, 2026</p>
+        </div>
+
+        {/* Hero Image */}
+        <div className="mb-12 rounded-xl overflow-hidden border border-white/[0.06]">
+          <Image
+            src="/spermracinghero.png"
+            alt="Sperm Racing World Cup 2026"
+            width={680}
+            height={400}
+            className="w-full h-auto"
+          />
+        </div>
 
         {/* Intro */}
-        <div className="mb-16 space-y-6 text-base md:text-lg leading-relaxed">
-          <p className="text-[#e0e0e0] text-lg md:text-xl leading-[1.7]">
-            In late 2026, Sperm Racing will host its <span className="text-white font-semibold">first International Cup</span>, bringing together athletes from <span className="text-white font-semibold">128 countries</span> to compete for a <span className="text-[#FF361D] font-bold text-xl md:text-2xl">$100,000 prize pool</span>.
-          </p>
+        <div className="mb-16 space-y-5 text-base md:text-lg leading-relaxed">
           <p className="text-[#b0b0b0] leading-relaxed">
             This page explains how participation works, who is eligible, and what it means to represent a country.
           </p>
-          
-          {/* Hero Image */}
-          <div className="my-12 rounded-lg overflow-hidden border border-[#1a1a1a]">
-            <Image
-              src="/spermracinghero.png"
-              alt="Sperm Racing"
-              width={680}
-              height={400}
-              className="w-full h-auto"
-            />
-          </div>
-          
-          <p className="text-[#808080] text-sm md:text-base italic border-l-2 border-[#FF361D] pl-4 py-2">
+          <p className="text-[#666] text-sm border-l-2 border-[#FF361D]/50 pl-4 py-1">
             Please read carefully before applying.
           </p>
         </div>
 
-        {/* Application Link */}
-        <div className="mb-20 pb-20 border-b border-[#1a1a1a]">
-          <Link 
-            href="/submissions"
-            className="inline-block"
-          >
-            <Button 
-              className="bg-[#FF361D] hover:bg-[#e6301a] text-white px-10 py-7 text-base md:text-lg font-bold rounded-md transition-colors duration-200"
-              style={{ fontFamily: monoFont.style.fontFamily }}
-            >
-              APPLY NOW →
-            </Button>
-          </Link>
-        </div>
+        <div className="border-t border-white/[0.06] mb-16" />
 
         {/* Main Content */}
         <div className="space-y-16 md:space-y-20 text-base md:text-lg leading-relaxed">
@@ -93,12 +68,11 @@ const WorldCupPage = () => {
               Sperm Racing is a <span className="text-white font-semibold">science-based competitive sport</span>. During the 2026 Sperm Racing International Cup, athletes compete by representing a country, advancing through qualifiers, matchups, and tournament rounds that are broadcast and shared publicly.
             </p>
             
-            {/* Highlight Box */}
-            <div className="bg-[#141414] border border-[#2a2a2a] p-6 md:p-8 rounded-lg">
+            <div className="bg-white/[0.02] border border-white/[0.06] p-6 md:p-8 rounded-xl">
               <p className="text-white text-lg md:text-xl font-semibold mb-3">
                 This is NOT a lottery or a game of chance.
               </p>
-              <p className="text-[#b0b0b0] leading-relaxed">
+              <p className="text-[#999] leading-relaxed">
                 Selection and advancement are based on eligibility, performance, availability, and competitive structure.
               </p>
             </div>
@@ -110,8 +84,8 @@ const WorldCupPage = () => {
               Who Can Apply
             </h2>
             <p className="text-[#d0d0d0] text-lg">To apply, you must:</p>
-            <div className="bg-[#141414] border border-[#2a2a2a] rounded-lg p-6 md:p-8">
-              <ul className="space-y-4 text-[#b0b0b0] text-base md:text-lg">
+            <div className="bg-white/[0.02] border border-white/[0.06] rounded-xl p-6 md:p-8">
+              <ul className="space-y-4 text-[#999] text-base md:text-lg">
                 <li className="flex items-start">
                   <span className="text-[#FF361D] mr-3 font-bold">•</span>
                   <span>Be <span className="text-white font-medium">18 years or older</span></span>
@@ -146,7 +120,7 @@ const WorldCupPage = () => {
                 </li>
               </ul>
             </div>
-            <p className="text-[#808080] text-sm md:text-base italic border-l-2 border-[#2a2a2a] pl-4 py-2">
+            <p className="text-[#666] text-sm border-l-2 border-white/[0.08] pl-4 py-2">
               Applying does not guarantee selection.
             </p>
           </section>
@@ -157,16 +131,16 @@ const WorldCupPage = () => {
               Country Representation Rules
             </h2>
             
-            <div className="bg-[#141414] border-2 border-[#FF361D] rounded-lg p-6 md:p-8">
+            <div className="bg-[#FF361D]/[0.04] border border-[#FF361D]/30 rounded-xl p-6 md:p-8">
               <p className="text-white text-lg md:text-xl font-semibold mb-4">
                 Each country is represented by ONE (1) athlete during the Qualifiers stage.
               </p>
-              <p className="text-[#b0b0b0] text-base md:text-lg leading-relaxed">
+              <p className="text-[#999] text-base md:text-lg leading-relaxed">
                 To represent a country, you must meet at least one of the following:
               </p>
             </div>
 
-            <div className="ml-4 pl-6 border-l-2 border-[#FF361D] space-y-5">
+            <div className="ml-4 pl-6 border-l-2 border-[#FF361D]/50 space-y-5">
               <p className="font-semibold text-white text-lg">You may represent a country if:</p>
               <ul className="space-y-4 text-[#b0b0b0] text-base md:text-lg">
                 <li className="flex items-start">
@@ -192,7 +166,7 @@ const WorldCupPage = () => {
               </ul>
             </div>
             
-            <p className="text-[#808080] text-sm border-l-2 border-[#2a2a2a] pl-4 py-2">
+            <p className="text-[#666] text-sm border-l-2 border-white/[0.08] pl-4 py-2">
               Sponsor reserves the right to request clarification or documentation at later stages.
             </p>
           </section>
@@ -217,7 +191,7 @@ const WorldCupPage = () => {
               </li>
             </ul>
             
-            <div className="mt-8 ml-4 pl-6 border-l-2 border-[#2a2a2a] space-y-4">
+            <div className="mt-8 ml-4 pl-6 border-l-2 border-white/[0.08] space-y-4">
               <p className="font-semibold text-white text-lg">Sponsor may:</p>
               <ul className="space-y-3 text-[#b0b0b0]">
                 <li className="flex items-start">
@@ -278,8 +252,8 @@ const WorldCupPage = () => {
             
             <p className="text-[#d0d0d0] text-lg">The Competition includes multiple stages:</p>
             
-            <div className="bg-[#141414] border border-[#2a2a2a] rounded-lg p-6 md:p-8">
-              <ul className="space-y-4 text-[#b0b0b0] text-base md:text-lg">
+            <div className="bg-white/[0.02] border border-white/[0.06] rounded-xl p-6 md:p-8">
+              <ul className="space-y-4 text-[#999] text-base md:text-lg">
                 <li className="flex items-start">
                   <span className="text-[#FF361D] mr-4 font-bold text-xl">1.</span>
                   <span><span className="text-white font-medium">Open Applications</span></span>
@@ -307,11 +281,11 @@ const WorldCupPage = () => {
               </ul>
             </div>
             
-            <p className="text-[#808080] text-sm md:text-base border-l-2 border-[#2a2a2a] pl-4 py-2">
+            <p className="text-[#666] text-sm border-l-2 border-white/[0.08] pl-4 py-2">
               Not every applied matchup will occur physically. Some rounds may be simulated or produced for storytelling and broadcast purposes.
             </p>
             
-            <div className="bg-[#141414] border-2 border-[#FF361D] rounded-lg p-6 md:p-8">
+            <div className="bg-[#FF361D]/[0.04] border border-[#FF361D]/30 rounded-xl p-6 md:p-8">
               <p className="font-semibold text-white text-lg mb-4">Sponsor Controls:</p>
               <ul className="space-y-3 text-[#b0b0b0]">
                 <li className="flex items-start">
@@ -455,8 +429,8 @@ const WorldCupPage = () => {
               Content & Publicity
             </h2>
             <p className="text-[#d0d0d0] text-lg">By participating, you agree that Sperm Racing may use:</p>
-            <div className="bg-[#141414] border border-[#2a2a2a] rounded-lg p-6 md:p-8">
-              <ul className="space-y-3 text-[#b0b0b0] text-base md:text-lg">
+            <div className="bg-white/[0.02] border border-white/[0.06] rounded-xl p-6 md:p-8">
+              <ul className="space-y-3 text-[#999] text-base md:text-lg">
                 <li className="flex items-start">
                   <span className="text-[#FF361D] mr-3 font-bold">•</span>
                   <span>Your name</span>
@@ -486,7 +460,7 @@ const WorldCupPage = () => {
             <p className="text-[#b0b0b0] text-base md:text-lg leading-relaxed">
               For promotional, broadcast, documentary, and marketing purposes worldwide, across all media.
             </p>
-            <div className="bg-[#141414] border-l-2 border-[#FF361D] p-6 rounded-r-lg">
+            <div className="bg-white/[0.02] border-l-2 border-[#FF361D]/50 p-6 rounded-r-xl">
               <p className="font-medium text-white text-lg">This is a core part of the sport.</p>
             </div>
           </section>
@@ -515,7 +489,7 @@ const WorldCupPage = () => {
                 <span>Avoid harassment, threats, or harmful behavior</span>
               </li>
             </ul>
-            <p className="text-[#b0b0b0] text-base md:text-lg mt-6 border-l-2 border-[#2a2a2a] pl-4 py-2">
+            <p className="text-[#999] text-base md:text-lg mt-6 border-l-2 border-white/[0.08] pl-4 py-2">
               <span className="text-white font-medium">Trash talk, rivalry, and personality are welcome.</span> Malicious or illegal behavior is not.
             </p>
           </section>
@@ -569,33 +543,29 @@ const WorldCupPage = () => {
           </section>
 
           {/* CTA */}
-          <div className="mt-20 pt-16 border-t border-[#1a1a1a]">
-            <div className="text-center space-y-8">
-              <h3 className="text-4xl md:text-6xl font-bold mb-4 leading-tight text-white">
+          <div className="mt-20 pt-16 border-t border-white/[0.06]">
+            <div className="text-center space-y-6">
+              <h3 className="text-3xl md:text-5xl font-bold leading-tight text-white">
                 Ready to Compete?
               </h3>
-              <p className="text-[#a0a0a0] text-lg md:text-xl mb-8 leading-relaxed">
+              <p className="text-[#999] text-lg md:text-xl leading-relaxed">
                 Join athletes from <span className="text-white font-semibold">128 countries</span> competing for <span className="text-[#FF361D] font-bold">$100,000</span>
               </p>
-              <Link 
-                href="/submissions"
-                className="inline-block"
-              >
-                <Button 
-                  className="bg-[#FF361D] hover:bg-[#e6301a] text-white px-14 py-8 text-lg md:text-xl font-bold rounded-md transition-colors duration-200"
-                  style={{ fontFamily: monoFont.style.fontFamily }}
+              <div className="pt-2">
+                <Link
+                  href="/submissions"
+                  className="inline-flex items-center gap-2 px-9 py-4 rounded-xl bg-[#FF361D] text-white font-semibold text-lg transition-all duration-200 hover:brightness-110 active:scale-[0.97]"
                 >
-                  APPLY NOW →
-                </Button>
-              </Link>
-              <p className="text-[#808080] text-sm mt-6">
-                Applications are reviewed on a rolling basis
+                  Apply Now
+                </Link>
+              </div>
+              <p className="text-[#666] text-sm">
+                Applications reviewed on a rolling basis
               </p>
             </div>
           </div>
 
-          {/* Extra whitespace */}
-          <div className="h-20 md:h-32"></div>
+          <div className="h-16 md:h-24"></div>
         </div>
       </div>
     </div>

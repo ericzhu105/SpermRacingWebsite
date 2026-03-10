@@ -1,8 +1,6 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 import { Forminit } from 'forminit';
 
 const DEADLINE = new Date('2026-03-15T23:59:59');
@@ -61,16 +59,16 @@ const COUNTRIES = [
 ];
 
 export default function SubmissionsPage() {
-  const router = useRouter();
   const [mounted, setMounted] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
+  const [slideDirection, setSlideDirection] = useState<'forward' | 'back'>('forward');
   const [sessionToken, setSessionToken] = useState('');
   const [timeRemaining, setTimeRemaining] = useState<any>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [lastSubmitTime, setLastSubmitTime] = useState(0);
-  const forminit = new Forminit({ proxyUrl: '/api/forminit' });
+  const formInitRef = useRef(new Forminit({ proxyUrl: '/api/forminit' }));
 
   const isDev = process.env.NODE_ENV === 'development';
 
@@ -180,9 +178,9 @@ export default function SubmissionsPage() {
     localStorage.removeItem(STORAGE_KEY);
   };
 
-  // Save progress to localStorage on every change
+  // Save progress to localStorage on every change (skip if already submitted)
   useEffect(() => {
-    if (!mounted) return;
+    if (!mounted || submitted) return;
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({
         formData,
@@ -191,13 +189,12 @@ export default function SubmissionsPage() {
         savedAt: Date.now(),
       }));
     } catch { /* storage full or unavailable */ }
-  }, [formData, currentStep, completedSteps, mounted]);
+  }, [formData, currentStep, completedSteps, mounted, submitted]);
 
+  // One-time initialization on mount
   useEffect(() => {
     setMounted(true);
 
-    // Restore saved progress — restore form data and completed steps,
-    // but start at the earliest incomplete step (not wherever they left off)
     const saved = loadSavedData();
     if (saved) {
       setFormData({ ...EMPTY_FORM_DATA, ...saved.formData });
@@ -209,7 +206,6 @@ export default function SubmissionsPage() {
     const token = Math.random().toString(36).substring(2) + Date.now().toString(36);
     setSessionToken(token);
 
-    // Update countdown
     const interval = setInterval(() => {
       const now = new Date();
       const diff = DEADLINE.getTime() - now.getTime();
@@ -225,26 +221,10 @@ export default function SubmissionsPage() {
       }
     }, 1000);
 
-    // Keyboard shortcuts
-    const handleKeyDown = (e: KeyboardEvent) => {
-      // Ctrl/Cmd + Enter to continue/submit
-      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-        e.preventDefault();
-        if (currentStep < 4) {
-          handleNext();
-        } else {
-          handleSubmit();
-        }
-      }
-    };
+    return () => clearInterval(interval);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    window.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      clearInterval(interval);
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [currentStep]);
 
   const isPastDeadline = () => {
     return new Date() > DEADLINE;
@@ -336,34 +316,45 @@ export default function SubmissionsPage() {
       return;
     }
     
-    // Mark current step as completed
     if (!completedSteps.includes(currentStep)) {
       setCompletedSteps([...completedSteps, currentStep]);
     }
     
+    setSlideDirection('forward');
     setCurrentStep(currentStep + 1);
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleBack = () => {
-    setCurrentStep(currentStep - 1);
-    window.scrollTo(0, 0);
+    const prevStep = currentStep - 1;
+    setCompletedSteps(completedSteps.filter(s => s < currentStep));
+    setSlideDirection('back');
+    setCurrentStep(prevStep);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleStepClick = (step: number) => {
-    // Allow navigation to completed steps or the next uncompleted step
-    if (step === 1 || completedSteps.includes(step - 1) || completedSteps.includes(step)) {
+    if (step === currentStep) return;
+    const canNavigate = step === 1 || completedSteps.includes(step - 1) || completedSteps.includes(step);
+    if (canNavigate) {
+      if (step < currentStep) {
+        setCompletedSteps(completedSteps.filter(s => s < step));
+      }
+      setSlideDirection(step > currentStep ? 'forward' : 'back');
       setCurrentStep(step);
-      window.scrollTo(0, 0);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
   const handleSubmit = async () => {
-    const error = validateSection4();
-    if (error) {
-      alert(error);
-      return;
-    }
+    const s1 = validateSection1();
+    if (s1) { alert(s1); setCurrentStep(1); return; }
+    const s2 = validateSection2();
+    if (s2) { alert(s2); setCurrentStep(2); return; }
+    const s3 = validateSection3();
+    if (s3) { alert(s3); setCurrentStep(3); return; }
+    const s4 = validateSection4();
+    if (s4) { alert(s4); return; }
 
     // Honeypot check
     if (formData.hp_field) {
@@ -376,6 +367,27 @@ export default function SubmissionsPage() {
     if (now - lastSubmitTime < 30000) {
       alert('Please wait 30 seconds between submissions');
       return;
+    }
+
+    // Check for duplicate email
+    try {
+      const checkRes = await fetch('/api/check-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: formData.email.trim().toLowerCase() }),
+        signal: AbortSignal.timeout(5000),
+      });
+      if (checkRes.ok) {
+        const { exists } = await checkRes.json();
+        if (exists) {
+          const proceed = window.confirm(
+            'It looks like an application with this email has already been submitted. Do you still want to submit again?'
+          );
+          if (!proceed) return;
+        }
+      }
+    } catch {
+      // Non-critical — proceed with submission if check fails
     }
 
     setIsSubmitting(true);
@@ -426,7 +438,7 @@ export default function SubmissionsPage() {
         : 'D-Tier (Needs Work)';
 
       // Submit to Forminit using JSON approach for structured data
-      const { data, redirectUrl, error: forminitError } = await forminit.submit('8ypso5cf6ae', {
+      const { data, redirectUrl, error: forminitError } = await formInitRef.current.submit('8ypso5cf6ae', {
         blocks: [
           {
             type: 'sender',
@@ -485,14 +497,39 @@ export default function SubmissionsPage() {
       }
 
       setLastSubmitTime(now);
-      setSubmitted(true);
       localStorage.removeItem(STORAGE_KEY);
+      setFormData(EMPTY_FORM_DATA);
+      setCurrentStep(1);
+      setCompletedSteps([]);
+      setSubmitted(true);
     } catch (error) {
       alert('Error submitting form. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  // Keep refs to latest handlers so the keyboard listener never uses stale closures
+  const handleNextRef = useRef(handleNext);
+  handleNextRef.current = handleNext;
+  const handleSubmitRef = useRef(handleSubmit);
+  handleSubmitRef.current = handleSubmit;
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        e.preventDefault();
+        if (currentStep < 4) {
+          handleNextRef.current();
+        } else {
+          handleSubmitRef.current();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentStep]);
 
   if (!mounted) {
     return (
@@ -613,10 +650,10 @@ export default function SubmissionsPage() {
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight leading-[1.1] text-white">
             SR World Cup 2026
           </h1>
-          <p className="text-[#999] text-sm mt-3">Step {currentStep} of 4 — {SECTION_NAMES[currentStep - 1]}</p>
+          <p key={currentStep} className="text-[#999] text-sm mt-3 step-indicator">Step {currentStep} of 4 — {SECTION_NAMES[currentStep - 1]}</p>
 
           {currentStep === 1 && (
-            <div className="mt-8 space-y-4 text-[#999] text-[15px] leading-relaxed">
+            <div className="mt-8 space-y-4 text-[#999] text-[15px] leading-relaxed step-description">
               <p>In late 2026, Sperm Racing will host its first World Cup, featuring athletes from <span className="text-white">128 countries</span> competing for a <span className="text-white">$100,000 prize pool</span>. This form is your entry into the <span className="text-white">Qualifiers Stage</span>. During Qualifiers, each country will be represented by one (1) athlete.</p>
               <p>As a result, population-dense countries such as the United States will be significantly more competitive than smaller or less-represented nations. To maximize your chances of qualifying, we encourage applicants to consider representing a lesser-known country, provided they meet eligibility requirements.</p>
               <p>Selected athletes will advance to the main tournament and represent their country throughout the 2026 season. Visit <a href="/worldcup" className="text-white underline underline-offset-2 hover:text-[#FF361D] transition-colors">spermracing.com/worldcup</a> for eligibility criteria.</p>
@@ -624,7 +661,7 @@ export default function SubmissionsPage() {
           )}
 
           {currentStep === 3 && (
-            <div className="mt-8 space-y-4 text-[#999] text-[15px] leading-relaxed">
+            <div className="mt-8 space-y-4 text-[#999] text-[15px] leading-relaxed step-description">
               <p>Beyond raw competition, Sperm Racing is also about <span className="text-white">characters, rivalries, and stories</span> people want to follow.</p>
               <p>This section is your chance to explain <span className="text-white">why we should choose you</span> to represent your country.</p>
               <p>We are looking for distinctive, memorable backstories. Lean into what makes you different. This can include your upbringing, culture, career, personal struggles, confidence, humor, ego, or worldview. There is no "correct" answer. The goal is to give fans something to <span className="text-white">latch onto and root for</span> — or against.</p>
@@ -643,7 +680,7 @@ export default function SubmissionsPage() {
                   key={step}
                   onClick={() => handleStepClick(step)}
                   disabled={!isClickable}
-                  className={`h-1.5 flex-1 rounded-full transition-all duration-300 ${
+                  className={`h-1.5 flex-1 rounded-full transition-all duration-500 ease-out ${
                     isClickable && step !== currentStep ? 'cursor-pointer hover:opacity-80' : ''
                   } ${!isClickable ? 'cursor-not-allowed' : ''}`}
                   style={{
@@ -674,15 +711,14 @@ export default function SubmissionsPage() {
 
         {/* Form Content */}
         <div className="mb-12">
-          <div className={`transform transition-all duration-300 ease-out ${
-            currentStep ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-          }`}>
-            <div>
-              {currentStep === 1 && <Section1 formData={formData} setFormData={setFormData} />}
-              {currentStep === 2 && <Section2 formData={formData} setFormData={setFormData} />}
-              {currentStep === 3 && <Section3 formData={formData} setFormData={setFormData} />}
-              {currentStep === 4 && <Section4 formData={formData} setFormData={setFormData} />}
-            </div>
+          <div
+            key={currentStep}
+            className={`step-content step-${slideDirection}`}
+          >
+            {currentStep === 1 && <Section1 formData={formData} setFormData={setFormData} />}
+            {currentStep === 2 && <Section2 formData={formData} setFormData={setFormData} />}
+            {currentStep === 3 && <Section3 formData={formData} setFormData={setFormData} />}
+            {currentStep === 4 && <Section4 formData={formData} setFormData={setFormData} />}
           </div>
         </div>
 
@@ -735,17 +771,66 @@ export default function SubmissionsPage() {
 
       <style jsx>{`
         @keyframes fade-in {
-          from {
-            opacity: 0;
-            transform: translateY(-10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+          from { opacity: 0; transform: translateY(-8px); }
+          to { opacity: 1; transform: translateY(0); }
         }
         .animate-fade-in {
-          animation: fade-in 0.6s ease-out;
+          animation: fade-in 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        @keyframes slide-forward {
+          from { opacity: 0; transform: translateX(24px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slide-back {
+          from { opacity: 0; transform: translateX(-24px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes fade-up {
+          from { opacity: 0; transform: translateY(6px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fade-only {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
+        .step-forward {
+          animation: slide-forward 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .step-back {
+          animation: slide-back 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .step-description {
+          animation: fade-up 0.4s cubic-bezier(0.25, 1, 0.5, 1) 0.05s both;
+        }
+        .step-indicator {
+          animation: fade-only 0.25s ease-out;
+        }
+
+        @media (max-width: 640px) {
+          @keyframes slide-forward {
+            from { opacity: 0; transform: translateX(16px); }
+            to { opacity: 1; transform: translateX(0); }
+          }
+          @keyframes slide-back {
+            from { opacity: 0; transform: translateX(-16px); }
+            to { opacity: 1; transform: translateX(0); }
+          }
+          .step-forward, .step-back {
+            animation-duration: 0.3s;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .animate-fade-in,
+          .step-forward,
+          .step-back,
+          .step-description,
+          .step-indicator {
+            animation: none !important;
+          }
         }
       `}</style>
     </div>
