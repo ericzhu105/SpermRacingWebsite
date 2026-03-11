@@ -50,7 +50,7 @@ export default function WorldCupPage() {
       <div className="hidden md:block absolute top-0 bottom-0 right-16 w-[1px] bg-white/10 z-10 pointer-events-none"></div>
 
       {/* ===== HERO SECTION ===== */}
-      <section className="relative w-full h-[100dvh] flex flex-col pt-24 pb-0 overflow-hidden border-b border-white/20">
+      <section className="relative w-full h-[100dvh] flex flex-col pt-24 pb-0 overflow-hidden">
 
         {/* Background Image — object-position center for mobile crop */}
         <div className="absolute inset-0 z-0 select-none pointer-events-none">
@@ -62,17 +62,19 @@ export default function WorldCupPage() {
             priority
           />
           <div className="absolute inset-0 bg-black/30"></div>
+          {/* Top gradient to black on mobile for logo area */}
+          <div className="md:hidden absolute top-0 left-0 right-0 h-28 bg-gradient-to-b from-black via-black/80 to-transparent z-[1]"></div>
         </div>
 
         {/* Grid Lines - horizontal only, verticals are global */}
         <div className="hidden md:block absolute top-[10vh] left-0 w-full h-[1px] bg-white/10 z-10"></div>
-        <div className="absolute bottom-32 md:bottom-16 left-0 w-full h-[1px] bg-white/10 z-10"></div>
+        {/* removed redundant bottom grid line — stats bar border-t is sufficient */}
 
         {/* Main Content Container */}
         <div className="relative z-10 flex-1 flex flex-col justify-between h-full">
 
           {/* Mobile Title — upper area */}
-          <div className="md:hidden flex flex-col items-center px-4 pt-[22vh]">
+          <div className="md:hidden flex flex-col items-center px-4 pt-[14vh]">
             <h1
               className="text-center uppercase leading-[0.85] tracking-tight"
               style={{ fontFamily: titleFont, fontSize: '58.4px' }}
@@ -140,33 +142,54 @@ export default function WorldCupPage() {
               </p>
             </div>
             <div className="mr-4">
-              <Button
-                className="rounded-none bg-white text-black hover:bg-white/90 px-8 py-6 uppercase tracking-wider font-bold text-[10px] flex items-center justify-center gap-2"
-                style={{ fontFamily }}
-              >
-                <Tv className="w-3 h-3" />
-                Watch Full Video
-              </Button>
+              <a href="https://www.youtube.com/watch?v=WumH-msuWzk" target="_blank" rel="noopener noreferrer">
+                <Button
+                  className="rounded-none bg-white text-black hover:bg-white/90 px-8 py-6 uppercase tracking-wider font-bold text-[10px] flex items-center justify-center gap-2"
+                  style={{ fontFamily }}
+                >
+                  <Tv className="w-3 h-3" />
+                  Watch Full Video
+                </Button>
+              </a>
             </div>
           </div>
         </div>
 
         {/* Stats Bar — visible on both mobile and desktop */}
         <div className="absolute bottom-0 left-0 w-full items-center px-4 md:px-16 border-t border-white/10 bg-black/20 backdrop-blur-sm z-20" style={{ height: 'clamp(40px, 3.33vw, 64px)' }}>
+          {/* Desktop: grid layout */}
           <div
-            className="w-full h-full flex md:grid md:grid-cols-4 gap-2 md:gap-4 items-center text-[8px] md:text-[10px] tracking-widest uppercase text-gray-500 overflow-x-auto"
+            className="hidden md:grid w-full h-full grid-cols-4 gap-4 items-center text-[10px] tracking-widest uppercase text-gray-500"
             style={{ fontFamily }}
           >
             <div className="whitespace-nowrap">
               Last Race: <span className="text-white">World Cup Race Track</span>
             </div>
-            <div className="md:text-center whitespace-nowrap">
+            <div className="text-center whitespace-nowrap">
               Number of Laps: <span className="text-white">1</span>
             </div>
-            <div className="hidden md:block text-center">
+            <div className="text-center">
               Race Distance: <span className="text-white">1500M</span>
             </div>
-            <div className="hidden md:block text-right">
+            <div className="text-right">
+              Current Record: <span className="text-white">To Be Determined</span>
+            </div>
+          </div>
+          {/* Mobile: horizontal scrolling marquee */}
+          <div
+            className="md:hidden w-full h-full flex items-center overflow-x-auto gap-8 text-[8px] tracking-widest uppercase text-gray-500 scrollbar-hide"
+            style={{ fontFamily }}
+          >
+            <div className="whitespace-nowrap">
+              Last Race: <span className="text-white">World Cup Race Track</span>
+            </div>
+            <div className="whitespace-nowrap">
+              Number of Laps: <span className="text-white">1</span>
+            </div>
+            <div className="whitespace-nowrap">
+              Race Distance: <span className="text-white">1500M</span>
+            </div>
+            <div className="whitespace-nowrap">
               Current Record: <span className="text-white">To Be Determined</span>
             </div>
           </div>
@@ -316,7 +339,7 @@ export default function WorldCupPage() {
             </div>
 
             {/* Right: Video */}
-            <div className="relative w-full aspect-video bg-[#111] border border-white/10 rounded-lg overflow-hidden mr-2 md:mr-4">
+            <div className="relative w-full aspect-video bg-[#111] border border-white/10 rounded-lg overflow-hidden mx-auto md:mx-0 md:mr-4">
               <video
                 autoPlay
                 loop
@@ -334,7 +357,7 @@ export default function WorldCupPage() {
           {/* ROW 2: Image + Who Can / Cannot Apply */}
           <div className="relative grid grid-cols-1 md:grid-cols-[auto_1fr] gap-8 md:gap-12 items-start">
             {/* Left: Faceoff Image */}
-            <div className="relative rounded-lg overflow-hidden ml-2 md:ml-4" style={{ width: '100%', maxWidth: 'clamp(400px, 41.25vw, 792px)' }}>
+            <div className="relative rounded-lg overflow-hidden mx-auto md:mx-0 md:ml-4 order-2 md:order-1" style={{ width: '100%', maxWidth: 'clamp(400px, 41.25vw, 792px)' }}>
               <Image
                 src="/worldcup-faceoff.webp"
                 alt="Athletes face off"
@@ -345,9 +368,9 @@ export default function WorldCupPage() {
             </div>
 
             {/* Right: Who Can / Cannot Apply */}
-            <div className="space-y-10 pt-16 md:pt-24">
+            <div className="space-y-10 pt-0 md:pt-24 order-1 md:order-2 flex flex-col items-center md:items-start">
               {/* Who Can Apply */}
-              <div className="space-y-4">
+              <div className="space-y-4 flex flex-col items-center md:items-start">
                 <div
                   className="inline-block rounded-full relative"
                   style={{
@@ -376,7 +399,7 @@ export default function WorldCupPage() {
                   className="text-white uppercase"
                   style={{
                     fontFamily: titleFont,
-                    fontSize: 'clamp(36px, 3.823vw, 73.4px)',
+                    fontSize: 'clamp(58.4px, 3.823vw, 73.4px)',
                     lineHeight: '103%',
                     letterSpacing: '0%',
                     fontWeight: 400,
@@ -389,7 +412,7 @@ export default function WorldCupPage() {
                   className="uppercase"
                   style={{
                     fontFamily: monofonto.style.fontFamily,
-                    fontSize: 'clamp(10px, 0.833vw, 16px)',
+                    fontSize: 'clamp(14px, 0.833vw, 16px)',
                     lineHeight: '147%',
                     color: '#B4B4B4',
                   }}
@@ -397,20 +420,20 @@ export default function WorldCupPage() {
                   To apply, you must:
                 </p>
 
-                <ul className="space-y-2.5">
+                <ul className="space-y-2.5 self-start">
                   {[
                     '18 years or older',
                     'Free of sexually transmitted diseases',
                     'Able to provide biological samples in compliance with competition regulations',
                     'Available to appear in recorded content and competition coverage',
                   ].map((item, i) => (
-                    <li key={i} className="flex items-center gap-2.5">
-                      <Image src="/checkmark.png" alt="" width={20} height={20} className="flex-shrink-0" />
+                    <li key={i} className="flex items-start gap-2.5">
+                      <Image src="/checkmark.png" alt="" width={20} height={20} className="flex-shrink-0 mt-0.5" />
                       <span
                         className="uppercase"
                         style={{
                           fontFamily: monofonto.style.fontFamily,
-                          fontSize: 'clamp(10px, 0.833vw, 16px)',
+                          fontSize: 'clamp(14px, 0.833vw, 16px)',
                           lineHeight: '147%',
                           color: '#B4B4B4',
                         }}
@@ -422,10 +445,10 @@ export default function WorldCupPage() {
                 </ul>
 
                 <p
-                  className="uppercase"
+                  className="uppercase self-start"
                   style={{
                     fontFamily: monofonto.style.fontFamily,
-                    fontSize: 'clamp(10px, 0.833vw, 16px)',
+                    fontSize: 'clamp(14px, 0.833vw, 16px)',
                     lineHeight: '147%',
                     color: '#555',
                   }}
@@ -438,12 +461,12 @@ export default function WorldCupPage() {
               <div className="w-full h-[1px] bg-white/10"></div>
 
               {/* Who Cannot Apply */}
-              <div className="space-y-4">
+              <div className="space-y-4 flex flex-col items-center md:items-start">
                 <h2
                   className="text-white uppercase"
                   style={{
                     fontFamily: titleFont,
-                    fontSize: 'clamp(36px, 3.823vw, 73.4px)',
+                    fontSize: 'clamp(58.4px, 3.823vw, 73.4px)',
                     lineHeight: '103%',
                     letterSpacing: '0%',
                     fontWeight: 400,
@@ -456,7 +479,7 @@ export default function WorldCupPage() {
                   className="uppercase"
                   style={{
                     fontFamily: monofonto.style.fontFamily,
-                    fontSize: 'clamp(10px, 0.833vw, 16px)',
+                    fontSize: 'clamp(14px, 0.833vw, 16px)',
                     lineHeight: '147%',
                     color: '#B4B4B4',
                   }}
@@ -464,19 +487,19 @@ export default function WorldCupPage() {
                   You may not participate if you:
                 </p>
 
-                <ul className="space-y-2.5">
+                <ul className="space-y-2.5 self-start">
                   {[
                     'Are involved with Sperm Racing operations in any way',
                     'Are attempting to manipulate results, selection, or eligibility',
                     'Provide false or misleading information',
                   ].map((item, i) => (
-                    <li key={i} className="flex items-center gap-2.5">
-                      <Image src="/xmark.png" alt="" width={20} height={20} className="flex-shrink-0" />
+                    <li key={i} className="flex items-start gap-2.5">
+                      <Image src="/xmark.png" alt="" width={20} height={20} className="flex-shrink-0 mt-0.5" />
                       <span
                         className="uppercase"
                         style={{
                           fontFamily: monofonto.style.fontFamily,
-                          fontSize: 'clamp(10px, 0.833vw, 16px)',
+                          fontSize: 'clamp(14px, 0.833vw, 16px)',
                           lineHeight: '147%',
                           color: '#B4B4B4',
                         }}
@@ -489,17 +512,17 @@ export default function WorldCupPage() {
 
                 <Link href="/submissions" className="inline-flex items-center gap-2 mt-2">
                   <span
-                    className="uppercase font-bold border-b border-white/30 pb-0.5"
+                    className="uppercase font-bold border-b border-white pb-0.5"
                     style={{
                       fontFamily: monofonto.style.fontFamily,
-                      fontSize: 'clamp(10px, 0.833vw, 16px)',
+                      fontSize: 'clamp(16px, 0.833vw, 16px)',
                       lineHeight: '147%',
-                      color: '#B4B4B4',
+                      color: '#FFFFFF',
                     }}
                   >
                     Click here to apply
                   </span>
-                  <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </Link>
