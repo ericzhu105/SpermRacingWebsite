@@ -727,10 +727,27 @@ export default function WorldCupPage() {
       </>)}
 
       {activeTab === 'Brackets' && (
-        <section className="w-full py-16 px-8 md:px-24 text-center">
-          <p className="text-white/50 uppercase" style={{ fontFamily: monofonto.style.fontFamily, fontSize: 'clamp(12px, 0.833vw, 16px)' }}>
-            Brackets content coming soon.
-          </p>
+        <section className="w-full py-16">
+          {/* Desktop: 3-column layout */}
+          <div className="hidden md:flex justify-center" style={{ gap: 'clamp(15px, 1.5625vw, 30px)' }}>
+            <div style={{ width: 'clamp(232px, 24.17vw, 464px)' }}>
+              <Image src="/europeBrackets.png" alt="Europe Brackets" width={930} height={1481} className="w-full h-auto" />
+            </div>
+            <div style={{ width: 'clamp(232px, 24.17vw, 464px)' }}>
+              <Image src="/asiaBrackets.png" alt="Asia / Oceania Brackets" width={930} height={1481} className="w-full h-auto" />
+            </div>
+            <div className="flex flex-col" style={{ width: 'clamp(232px, 24.17vw, 464px)', gap: 'clamp(15px, 1.5625vw, 30px)' }}>
+              <Image src="/americaBrackets.png" alt="Americas Brackets" width={930} height={723} className="w-full h-auto" />
+              <Image src="/africaBrackets.png" alt="Africa Brackets" width={930} height={533} className="w-full h-auto" />
+            </div>
+          </div>
+          {/* Mobile: single column, stacked */}
+          <div className="md:hidden flex flex-col items-center gap-4 px-4">
+            <Image src="/europeBrackets.png" alt="Europe Brackets" width={930} height={1481} className="w-full max-w-[400px] h-auto" />
+            <Image src="/asiaBrackets.png" alt="Asia / Oceania Brackets" width={930} height={1481} className="w-full max-w-[400px] h-auto" />
+            <Image src="/americaBrackets.png" alt="Americas Brackets" width={930} height={723} className="w-full max-w-[400px] h-auto" />
+            <Image src="/africaBrackets.png" alt="Africa Brackets" width={930} height={533} className="w-full max-w-[400px] h-auto" />
+          </div>
         </section>
       )}
 
