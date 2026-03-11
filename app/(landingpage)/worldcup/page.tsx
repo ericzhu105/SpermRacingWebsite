@@ -36,7 +36,7 @@ const WorldCupPage = () => {
         {/* Hero Image */}
         <div className="mb-12 rounded-xl overflow-hidden border border-white/[0.06]">
           <Image
-            src="/spermracinghero.png"
+            src="/spermracinghero.webp"
             alt="Sperm Racing World Cup 2026"
             width={680}
             height={400}
