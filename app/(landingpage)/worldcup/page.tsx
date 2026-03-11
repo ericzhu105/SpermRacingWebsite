@@ -187,7 +187,7 @@ export default function WorldCupPage() {
             className="uppercase tracking-normal mb-2 md:mb-[0.2vw] text-center"
             style={{ fontFamily: monofonto.style.fontFamily, lineHeight: '161%', letterSpacing: '0%', fontSize: 'clamp(16px, 1.04vw, 20px)', maxWidth: 'clamp(290px, 36.875vw, 708px)' }}
           >
-            <span className="text-[#DBDBDB]">In late 2026, Sperm Racing will be hosting its first World Cup,</span>
+            <span className="text-[#DBDBDB]">In 2026, Sperm Racing will be hosting its first World Cup,</span>
             <br className="hidden md:inline" />
             <span className="md:hidden"> </span>
             <span className="text-[#414141]">bringing together athletes from 128 countries to compete for a</span>
@@ -565,11 +565,92 @@ export default function WorldCupPage() {
       </section>
 
       {/* ===== COMPETITION STRUCTURE ===== */}
-      <section className="relative w-full py-16 md:py-20 px-8 md:px-24">
-        <div className="w-full flex flex-col md:flex-row items-start gap-8">
+      {/* Mobile version — centered title, vertical timeline */}
+      <section className="md:hidden relative w-full py-8 px-6">
+        <div className="flex flex-col items-center text-center mb-2">
+          <h2
+            className="text-white uppercase"
+            style={{
+              fontFamily: titleFont,
+              fontSize: '58.4px',
+              lineHeight: '95%',
+              fontWeight: 400,
+            }}
+          >
+            Competition<br />Structure
+          </h2>
+          <p
+            className="uppercase mt-3"
+            style={{
+              fontFamily: monofonto.style.fontFamily,
+              fontSize: '10px',
+              lineHeight: '147%',
+              color: '#FF6633',
+            }}
+          >
+            Not every applied matchup may occur physically.
+          </p>
+        </div>
+
+        {/* Vertical timeline with video background */}
+        <div className="relative w-full" style={{ height: '650px' }}>
+          {/* Rotated timeline video — 209px wide, full height */}
+          <div className="absolute left-1/2 top-0 -translate-x-1/2 overflow-hidden" style={{ width: '209px', height: '650px' }}>
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              className="absolute top-1/2 left-1/2"
+              style={{ width: '1920px', height: '492px', transform: 'translate(-50%, -50%) rotate(90deg) scale(3.8)', transformOrigin: 'center center' }}
+            >
+              <source src="/timeline2.mp4" type="video/mp4" />
+            </video>
+          </div>
+
+          {/* Labels positioned at peak coordinates (rotated 90° CW from desktop) */}
+          <div className="relative z-10 w-full h-full">
+            {/* 1 — left side */}
+            <div className="absolute text-left" style={{ top: '11%', left: '6%' }}>
+              <p className="text-white" style={{ fontFamily: titleFont, fontSize: '48px', lineHeight: '90%' }}>1</p>
+              <p className="uppercase text-white tracking-wider" style={{ fontFamily: monofonto.style.fontFamily, fontSize: '12px', lineHeight: '147%' }}>Open<br />Applications</p>
+            </div>
+            {/* 2 — right side */}
+            <div className="absolute text-right" style={{ top: '25%', right: '6%' }}>
+              <p className="text-white" style={{ fontFamily: titleFont, fontSize: '48px', lineHeight: '90%' }}>2</p>
+              <p className="uppercase text-white tracking-wider" style={{ fontFamily: monofonto.style.fontFamily, fontSize: '12px', lineHeight: '147%' }}>Qualifiers</p>
+            </div>
+            {/* 3 — left side */}
+            <div className="absolute text-left" style={{ top: '40%', left: '6%' }}>
+              <p className="text-white" style={{ fontFamily: titleFont, fontSize: '48px', lineHeight: '90%' }}>3</p>
+              <p className="uppercase text-white tracking-wider" style={{ fontFamily: monofonto.style.fontFamily, fontSize: '12px', lineHeight: '147%' }}>Head-to-Head<br />Matchups</p>
+            </div>
+            {/* 4 — right side, top: 57.97% */}
+            <div className="absolute text-right" style={{ top: '55%', right: '6%' }}>
+              <p className="text-white" style={{ fontFamily: titleFont, fontSize: '48px', lineHeight: '90%' }}>4</p>
+              <p className="uppercase text-white tracking-wider" style={{ fontFamily: monofonto.style.fontFamily, fontSize: '12px', lineHeight: '147%' }}>Tournament<br />Eliminations</p>
+            </div>
+            {/* 5 — left side, top: 70.52% */}
+            <div className="absolute text-left" style={{ top: '70.52%', left: '6%' }}>
+              <p className="text-white" style={{ fontFamily: titleFont, fontSize: '48px', lineHeight: '90%' }}>5</p>
+              <p className="uppercase text-white tracking-wider" style={{ fontFamily: monofonto.style.fontFamily, fontSize: '12px', lineHeight: '147%' }}>Live or Recorded<br />Events</p>
+            </div>
+            {/* 6 — right side, top: 82.92% */}
+            <div className="absolute text-right" style={{ top: '82.92%', right: '6%' }}>
+              <p className="text-white" style={{ fontFamily: titleFont, fontSize: '48px', lineHeight: '90%' }}>6</p>
+              <p className="uppercase text-white tracking-wider" style={{ fontFamily: monofonto.style.fontFamily, fontSize: '12px', lineHeight: '147%' }}>Finals<br />Event</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Desktop version — horizontal timeline */}
+      <section className="hidden md:block relative w-full py-20 px-24">
+        <div className="w-full flex flex-row items-start gap-8">
 
           {/* Left: Title */}
-          <div className="flex-shrink-0 pl-2 md:pl-4 md:pt-4" style={{ width: 'clamp(180px, 16.51vw, 317px)' }}>
+          <div className="flex-shrink-0 pl-4 pt-4 relative z-20" style={{ width: 'clamp(180px, 16.51vw, 317px)', marginTop: '-160px' }}>
             <h2
               className="text-white uppercase"
               style={{
@@ -595,52 +676,49 @@ export default function WorldCupPage() {
             </p>
           </div>
 
-          {/* Right: Timeline with labels */}
+          {/* Right: Timeline with labels overlaid on video */}
           <div className="relative flex-1">
-
-            {/* Top row labels: 2, 4, 6 */}
-            <div className="flex justify-between items-end" style={{ paddingBottom: '0px', paddingLeft: '5%', paddingRight: '15%' }}>
-              <div className="text-center">
-                <p className="text-white" style={{ fontFamily: titleFont, fontSize: 'clamp(60px, 6.44vw, 123.67px)', lineHeight: '103%' }}>2</p>
-                <p className="uppercase text-white tracking-wider" style={{ fontFamily: monofonto.style.fontFamily, fontSize: 'clamp(12px, 1.29vw, 24.78px)', lineHeight: '147%' }}>Qualifiers</p>
+            <div className="relative" style={{ aspectRatio: '1920 / 500', width: '93.33vw', marginLeft: 'clamp(-430px, -22.4vw, -260px)' }}>
+              {/* Video — behind everything */}
+              <div className="absolute inset-0 overflow-hidden z-0">
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="auto"
+                  className="w-full h-full object-cover"
+                >
+                  <source src="/timeline2.mp4" type="video/mp4" />
+                </video>
               </div>
-              <div className="text-center">
-                <p className="text-white" style={{ fontFamily: titleFont, fontSize: 'clamp(60px, 6.44vw, 123.67px)', lineHeight: '103%' }}>4</p>
-                <p className="uppercase text-white tracking-wider" style={{ fontFamily: monofonto.style.fontFamily, fontSize: 'clamp(12px, 1.29vw, 24.78px)', lineHeight: '147%' }}>Tournament Eliminations</p>
-              </div>
-              <div className="text-center">
-                <p className="text-white" style={{ fontFamily: titleFont, fontSize: 'clamp(60px, 6.44vw, 123.67px)', lineHeight: '103%' }}>6</p>
-                <p className="uppercase text-white tracking-wider" style={{ fontFamily: monofonto.style.fontFamily, fontSize: 'clamp(12px, 1.29vw, 24.78px)', lineHeight: '147%' }}>Finals Event</p>
-              </div>
-            </div>
 
-            {/* Timeline video */}
-            <div className="overflow-hidden" style={{ aspectRatio: '1792 / 459.2', width: '93.33vw', marginLeft: 'clamp(-350px, -18.23vw, -180px)' }}>
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="auto"
-                className="w-full h-full object-cover"
-              >
-                <source src="/timeline.webm" type="video/webm" />
-              </video>
-            </div>
-
-            {/* Bottom row labels: 1, 3, 5 */}
-            <div className="flex justify-between items-start" style={{ paddingTop: '0px', paddingLeft: '0%', paddingRight: '20%' }}>
-              <div className="text-center">
+              {/* Bottom peaks (1,3,5) */}
+              <div className="absolute text-center z-10" style={{ left: '20.26%', top: '88%', transform: 'translateX(-50%)' }}>
                 <p className="text-white" style={{ fontFamily: titleFont, fontSize: 'clamp(60px, 6.44vw, 123.67px)', lineHeight: '103%' }}>1</p>
                 <p className="uppercase text-white tracking-wider" style={{ fontFamily: monofonto.style.fontFamily, fontSize: 'clamp(12px, 1.29vw, 24.78px)', lineHeight: '147%' }}>Open Applications</p>
               </div>
-              <div className="text-center">
+              <div className="absolute text-center z-10" style={{ left: '45.47%', top: '88%', transform: 'translateX(-50%)' }}>
                 <p className="text-white" style={{ fontFamily: titleFont, fontSize: 'clamp(60px, 6.44vw, 123.67px)', lineHeight: '103%' }}>3</p>
                 <p className="uppercase text-white tracking-wider" style={{ fontFamily: monofonto.style.fontFamily, fontSize: 'clamp(12px, 1.29vw, 24.78px)', lineHeight: '147%' }}>Head-to-Head Matchups</p>
               </div>
-              <div className="text-center">
+              <div className="absolute text-center z-10" style={{ left: '70.52%', top: '88%', transform: 'translateX(-50%)' }}>
                 <p className="text-white" style={{ fontFamily: titleFont, fontSize: 'clamp(60px, 6.44vw, 123.67px)', lineHeight: '103%' }}>5</p>
                 <p className="uppercase text-white tracking-wider" style={{ fontFamily: monofonto.style.fontFamily, fontSize: 'clamp(12px, 1.29vw, 24.78px)', lineHeight: '147%' }}>Live or Recorded Events</p>
+              </div>
+
+              {/* Top peaks (2,4,6) */}
+              <div className="absolute text-center flex flex-col justify-end z-10" style={{ left: '33.02%', bottom: '88%', transform: 'translateX(-50%)' }}>
+                <p className="text-white" style={{ fontFamily: titleFont, fontSize: 'clamp(60px, 6.44vw, 123.67px)', lineHeight: '103%' }}>2</p>
+                <p className="uppercase text-white tracking-wider" style={{ fontFamily: monofonto.style.fontFamily, fontSize: 'clamp(12px, 1.29vw, 24.78px)', lineHeight: '147%' }}>Qualifiers</p>
+              </div>
+              <div className="absolute text-center flex flex-col justify-end z-10" style={{ left: '57.97%', bottom: '88%', transform: 'translateX(-50%)' }}>
+                <p className="text-white" style={{ fontFamily: titleFont, fontSize: 'clamp(60px, 6.44vw, 123.67px)', lineHeight: '103%' }}>4</p>
+                <p className="uppercase text-white tracking-wider" style={{ fontFamily: monofonto.style.fontFamily, fontSize: 'clamp(12px, 1.29vw, 24.78px)', lineHeight: '147%' }}>Tournament Eliminations</p>
+              </div>
+              <div className="absolute text-center flex flex-col justify-end z-10" style={{ left: '82.92%', bottom: '88%', transform: 'translateX(-50%)' }}>
+                <p className="text-white" style={{ fontFamily: titleFont, fontSize: 'clamp(60px, 6.44vw, 123.67px)', lineHeight: '103%' }}>6</p>
+                <p className="uppercase text-white tracking-wider" style={{ fontFamily: monofonto.style.fontFamily, fontSize: 'clamp(12px, 1.29vw, 24.78px)', lineHeight: '147%' }}>Finals Event</p>
               </div>
             </div>
           </div>
@@ -666,7 +744,7 @@ export default function WorldCupPage() {
 
       {/* ===== READY TO COMPETE CTA ===== */}
       {/* Mobile version — no box */}
-      <section className="md:hidden w-full px-6 py-16 flex flex-col items-center text-center">
+      <section className="md:hidden w-full px-6 pt-4 pb-16 flex flex-col items-center text-center">
         <h2
           className="text-white uppercase"
           style={{
