@@ -102,13 +102,13 @@ export default function WorldCupPage() {
             <Link href="/submissions">
               <Button
                 variant="outline"
-                className="rounded-none border-white text-white bg-black/40 backdrop-blur-sm hover:bg-white hover:text-black uppercase tracking-wider text-[10px] flex items-center justify-center gap-2"
+                className="rounded-lg border-white/30 text-white bg-black/60 backdrop-blur-sm hover:bg-white hover:text-black uppercase tracking-wider text-[10px] flex items-center justify-center gap-3"
                 style={{ fontFamily, width: '212px', height: '49px' }}
               >
                 Click Here to Apply
-                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                </svg>
+                <div className="w-7 h-7 bg-black/50 rounded-md flex items-center justify-center border border-white/20">
+                  <Image src="/sperm-icon.png" alt="" width={18} height={18} className="object-contain" />
+                </div>
               </Button>
             </Link>
             <p
@@ -125,13 +125,13 @@ export default function WorldCupPage() {
               <Link href="/submissions">
                 <Button
                   variant="outline"
-                  className="rounded-none border-white text-white bg-black/40 backdrop-blur-sm hover:bg-white hover:text-black px-12 py-6 uppercase tracking-wider text-[10px] flex items-center gap-2"
+                  className="rounded-lg border-white/30 text-white bg-black/60 backdrop-blur-sm hover:bg-white hover:text-black px-12 py-6 uppercase tracking-wider text-[10px] flex items-center gap-3"
                   style={{ fontFamily }}
                 >
                   Click Here to Apply
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                  </svg>
+                  <div className="w-7 h-7 bg-black/50 rounded-md flex items-center justify-center border border-white/20">
+                    <Image src="/sperm-icon.png" alt="" width={18} height={18} className="object-contain" />
+                  </div>
                 </Button>
               </Link>
               <p
@@ -693,7 +693,99 @@ export default function WorldCupPage() {
       )}
 
       {/* ===== READY TO COMPETE CTA ===== */}
-      <section className="w-full px-8 md:px-24 py-12 md:py-16">
+      {/* Mobile version — no box */}
+      <section className="md:hidden w-full px-6 py-16 flex flex-col items-center text-center">
+        <h2
+          className="text-white uppercase"
+          style={{
+            fontFamily: titleFont,
+            fontSize: '73.4px',
+            lineHeight: '95%',
+            fontWeight: 400,
+          }}
+        >
+          Ready to<br />Compete?
+        </h2>
+
+        <p
+          className="uppercase mt-4"
+          style={{
+            fontFamily: monofonto.style.fontFamily,
+            fontSize: '14px',
+            lineHeight: '161%',
+            color: '#999',
+          }}
+        >
+          Join athletes from{' '}
+          <span className="text-white font-bold" style={{ fontSize: '20px' }}>128 Countries</span>
+        </p>
+
+        <div className="flex items-center gap-1.5 mt-1">
+          <span
+            className="uppercase"
+            style={{
+              fontFamily: monofonto.style.fontFamily,
+              fontSize: '14px',
+              color: '#999',
+            }}
+          >
+            Competing for
+          </span>
+          <div className="relative" style={{ width: '80px', height: '28px' }}>
+            <Image
+              src="/100000.png"
+              alt="$100,000"
+              fill
+              className="object-contain"
+            />
+          </div>
+        </div>
+
+        {/* Apply Now Button — bigger for mobile */}
+        <Link href="/submissions" className="mt-8">
+          <div
+            className="inline-flex items-center gap-2 rounded-full relative"
+            style={{
+              padding: '1px',
+              background: 'linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(153,153,153,0.3))',
+            }}
+          >
+            <div
+              className="rounded-full flex items-center gap-4"
+              style={{
+                background: 'radial-gradient(ellipse at center, rgba(255,255,255,0.04), rgba(0,0,0,0.9))',
+                boxShadow: 'inset 0 4px 9.2px rgba(255,255,255,0.08)',
+                paddingLeft: '28px',
+                paddingRight: '20px',
+                paddingTop: '12px',
+                paddingBottom: '12px',
+              }}
+            >
+              <span className="text-white uppercase tracking-wider font-bold" style={{ fontFamily, fontSize: '12px' }}>
+                Apply Now
+              </span>
+              <div className="w-8 h-8 rounded-md flex items-center justify-center" style={{ background: 'rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.2)' }}>
+                <Image src="/sperm-icon.png" alt="" width={20} height={20} className="object-contain" />
+              </div>
+            </div>
+          </div>
+        </Link>
+
+        <p
+          className="uppercase mt-4"
+          style={{
+            fontFamily: monofonto.style.fontFamily,
+            fontSize: '10px',
+            lineHeight: '147%',
+            color: '#FF361D',
+          }}
+        >
+          Application reviewed on a rolling basis
+        </p>
+      </section>
+
+      {/* Desktop version — with box */}
+      <section className="hidden md:block w-full px-24 py-16">
         <div
           className="mx-auto flex flex-col items-center justify-center text-center rounded-lg"
           style={{
@@ -760,7 +852,7 @@ export default function WorldCupPage() {
               }}
             >
               <div
-                className="rounded-full flex items-center gap-2"
+                className="rounded-full flex items-center gap-3"
                 style={{
                   background: 'radial-gradient(ellipse at center, rgba(255,255,255,0.04), rgba(0,0,0,0.9))',
                   boxShadow: 'inset 0 4px 9.2px rgba(255,255,255,0.08)',
@@ -773,9 +865,9 @@ export default function WorldCupPage() {
                 <span className="text-white uppercase tracking-wider font-bold" style={{ fontFamily, fontSize: 'clamp(8px, 0.52vw, 10px)' }}>
                   Apply Now
                 </span>
-                <svg className="text-white" style={{ width: 'clamp(10px, 0.625vw, 12px)', height: 'clamp(10px, 0.625vw, 12px)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
+                <div className="rounded-md flex items-center justify-center" style={{ width: 'clamp(18px, 1.3vw, 25px)', height: 'clamp(18px, 1.3vw, 25px)', background: 'rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.2)' }}>
+                  <Image src="/sperm-icon.png" alt="" width={14} height={14} className="object-contain" />
+                </div>
               </div>
             </div>
           </Link>
