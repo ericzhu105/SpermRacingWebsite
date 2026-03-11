@@ -496,8 +496,20 @@ export default function SubmissionsPage() {
         return;
       }
 
+      // Record email in Supabase as backup (server may have already done this)
+      try {
+        await fetch('/api/check-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: formData.email.trim().toLowerCase(), action: 'record' }),
+          signal: AbortSignal.timeout(5000),
+        });
+      } catch {
+        // Non-critical — server-side already attempted this
+      }
+
       setLastSubmitTime(now);
-      localStorage.removeItem(STORAGE_KEY);
+      try { localStorage.removeItem(STORAGE_KEY); } catch { /* non-critical */ }
       setFormData(EMPTY_FORM_DATA);
       setCurrentStep(1);
       setCompletedSteps([]);

@@ -74,10 +74,11 @@ export async function POST(request: NextRequest) {
   const response = await forminit.POST(request);
 
   if (response.ok && email) {
-    supabase
-      .from('wc_submissions')
-      .insert({ email })
-      .then(() => {});
+    try {
+      await supabase.from('wc_submissions').insert({ email });
+    } catch {
+      // Non-critical — client will retry via /api/check-email record action
+    }
   }
 
   return response;
