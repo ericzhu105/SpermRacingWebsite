@@ -55,7 +55,7 @@ export default function WorldCupPage() {
         {/* Background Image — object-position center for mobile crop */}
         <div className="absolute inset-0 z-0 select-none pointer-events-none">
           <Image
-            src="/worldcup-hero.png"
+            src="/worldcup-hero.webp"
             alt="World Cup Race Track"
             fill
             className="object-cover object-center"
@@ -336,7 +336,7 @@ export default function WorldCupPage() {
             {/* Left: Faceoff Image */}
             <div className="relative rounded-lg overflow-hidden ml-2 md:ml-4" style={{ width: '100%', maxWidth: 'clamp(400px, 41.25vw, 792px)' }}>
               <Image
-                src="/worldcup-faceoff.png"
+                src="/worldcup-faceoff.webp"
                 alt="Athletes face off"
                 width={792}
                 height={1032}
@@ -514,7 +514,7 @@ export default function WorldCupPage() {
       <section className="relative w-full overflow-hidden">
         <div className="relative w-full" style={{ aspectRatio: '5760 / 3216' }}>
           <Image
-            src="/worldcup-countries-bg.png"
+            src="/worldcup-countries-bg.webp"
             alt="Country flags background"
             fill
             className="object-cover"
@@ -629,7 +629,7 @@ export default function WorldCupPage() {
                 preload="auto"
                 className="w-full h-full object-cover"
               >
-                <source src="/timeline.mp4" type="video/mp4" />
+                <source src="/timeline.webm" type="video/webm" />
               </video>
             </div>
 
