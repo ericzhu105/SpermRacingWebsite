@@ -30,6 +30,8 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
+  const isWorldCupPage = pathname === '/worldcup';
+
   const navLinks = [
     // { name: 'LIVESTREAM', href: '/races' },
     { name: 'MANIFESTO', href: '/manifesto' },
@@ -58,13 +60,13 @@ export default function Navbar() {
 
   return (
     <nav className={getNavClasses()}>
-      {/* Mobile Logo - top-left, hides when menu is open */}
-      <div className={`md:hidden absolute top-0 left-4 z-50 transition-opacity ${isMenuOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+      {/* Mobile Logo - centered on worldcup, top-left otherwise; hides when menu is open */}
+      <div className={`md:hidden absolute top-0 z-50 transition-opacity ${isWorldCupPage ? 'left-1/2 -translate-x-1/2' : 'left-4'} ${isMenuOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
         <Link href="/" className="p-2 block">
-          <div className="relative w-[40px] h-[40px]">
+          <div className={`relative ${isWorldCupPage ? 'w-[83px] h-[83px]' : 'w-[40px] h-[40px]'}`}>
             <Image
-              src={isManifestoPage ? "/images/logo/mainLogo.png" : "/LOGO-07.svg"}
-              alt="Sperm Racing Logo"
+              src={isWorldCupPage ? "/sr-worldcup-logo.png" : isManifestoPage ? "/images/logo/mainLogo.png" : "/LOGO-07.svg"}
+              alt={isWorldCupPage ? "SR World Cup" : "Sperm Racing Logo"}
               fill
               className="object-contain"
               priority
@@ -76,10 +78,10 @@ export default function Navbar() {
       {/* Desktop Logo - aligned with hero text on main page */}
       <div className="hidden md:block absolute left-16 md:left-20 top-1/2 -translate-y-1/2">
         <Link href="/">
-          <div className="relative w-[220px] h-[40px]">
+          <div className={`relative ${isWorldCupPage ? 'w-[84px] h-[84px]' : 'w-[220px] h-[40px]'}`}>
             <Image
-              src={isManifestoPage ? "/LOGO-13-black.svg" : "/LOGO-13.svg"}
-              alt="Sperm Racing Logo"
+              src={isWorldCupPage ? "/sr-worldcup-logo.png" : isManifestoPage ? "/LOGO-13-black.svg" : "/LOGO-13.svg"}
+              alt={isWorldCupPage ? "SR World Cup" : "Sperm Racing Logo"}
               fill
               className="object-contain"
               priority
