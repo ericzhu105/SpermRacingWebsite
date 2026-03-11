@@ -99,17 +99,9 @@ export default function WorldCupPage() {
 
           {/* Mobile: centered button + text */}
           <div className="md:hidden flex flex-col items-center gap-2 pb-16 px-4 z-20">
-            <Link href="/submissions">
-              <Button
-                variant="outline"
-                className="rounded-lg border-white/30 text-white bg-black/60 backdrop-blur-sm hover:bg-white hover:text-black uppercase tracking-wider text-[10px] flex items-center justify-center gap-3"
-                style={{ fontFamily, width: '212px', height: '49px' }}
-              >
-                Click Here to Apply
-                <div className="w-7 h-7 bg-black/50 rounded-md flex items-center justify-center border border-white/20">
-                  <Image src="/sperm-icon.png" alt="" width={18} height={18} className="object-contain" />
-                </div>
-              </Button>
+            <Link href="/submissions" className="group block" style={{ width: '212px', height: '49px' }}>
+              <Image src="/apply-btn-hover.png" alt="Click Here to Apply" width={424} height={98} className="w-full h-full object-contain group-hover:hidden" />
+              <Image src="/apply-btn.png" alt="Click Here to Apply" width={424} height={98} className="w-full h-full object-contain hidden group-hover:block" />
             </Link>
             <p
               className="text-[#FF361D] text-[10px] uppercase tracking-wider text-center"
@@ -122,17 +114,9 @@ export default function WorldCupPage() {
           {/* Desktop: left/right buttons */}
           <div className="hidden md:flex justify-between items-end px-16 pb-16">
             <div className="max-w-md ml-4">
-              <Link href="/submissions">
-                <Button
-                  variant="outline"
-                  className="rounded-lg border-white/30 text-white bg-black/60 backdrop-blur-sm hover:bg-white hover:text-black px-12 py-6 uppercase tracking-wider text-[10px] flex items-center gap-3"
-                  style={{ fontFamily }}
-                >
-                  Click Here to Apply
-                  <div className="w-7 h-7 bg-black/50 rounded-md flex items-center justify-center border border-white/20">
-                    <Image src="/sperm-icon.png" alt="" width={18} height={18} className="object-contain" />
-                  </div>
-                </Button>
+              <Link href="/submissions" className="group block" style={{ width: '250px', height: '58px' }}>
+                <Image src="/apply-btn-hover.png" alt="Click Here to Apply" width={424} height={98} className="w-full h-full object-contain group-hover:hidden" />
+                <Image src="/apply-btn.png" alt="Click Here to Apply" width={424} height={98} className="w-full h-full object-contain hidden group-hover:block" />
               </Link>
               <p
                 className="text-[#FF361D] text-[10px] uppercase tracking-wider mt-2"
@@ -510,21 +494,9 @@ export default function WorldCupPage() {
                   ))}
                 </ul>
 
-                <Link href="/submissions" className="inline-flex items-center gap-2 mt-2">
-                  <span
-                    className="uppercase font-bold border-b border-white pb-0.5"
-                    style={{
-                      fontFamily: monofonto.style.fontFamily,
-                      fontSize: 'clamp(16px, 0.833vw, 16px)',
-                      lineHeight: '147%',
-                      color: '#FFFFFF',
-                    }}
-                  >
-                    Click here to apply
-                  </span>
-                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
+                <Link href="/submissions" className="mt-4 group block" style={{ width: '212px', height: '49px' }}>
+                  <Image src="/apply-btn-hover.png" alt="Click Here to Apply" width={424} height={98} className="w-full h-full object-contain group-hover:hidden" />
+                  <Image src="/apply-btn.png" alt="Click Here to Apply" width={424} height={98} className="w-full h-full object-contain hidden group-hover:block" />
                 </Link>
               </div>
             </div>
