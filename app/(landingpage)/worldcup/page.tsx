@@ -112,9 +112,8 @@ export default function WorldCupPage() {
 
           {/* Mobile: centered button + text */}
           <div className="md:hidden flex flex-col items-center gap-2 pb-16 px-4 z-20">
-            <Link href="/submissions" className="group block" style={{ width: '212px', height: '49px' }}>
-              <Image src="/apply-btn-hover.png" alt="Click Here to Apply" width={424} height={98} className="w-full h-full object-contain group-hover:hidden" />
-              <Image src="/apply-btn.png" alt="Click Here to Apply" width={424} height={98} className="w-full h-full object-contain hidden group-hover:block" />
+            <Link href="/submissions" className="block" style={{ width: '212px', height: '49px' }}>
+              <Image src="/apply-btn-hover.png" alt="Click Here to Apply" width={424} height={98} className="w-full h-full object-contain" />
             </Link>
             <p
               className="text-[#FF361D] text-[10px] uppercase tracking-wider text-center"
@@ -127,9 +126,8 @@ export default function WorldCupPage() {
           {/* Desktop: left/right buttons */}
           <div className="hidden md:flex justify-between items-end px-16 pb-16">
             <div className="max-w-md ml-4">
-              <Link href="/submissions" className="group block" style={{ width: '250px', height: '58px' }}>
-                <Image src="/apply-btn-hover.png" alt="Click Here to Apply" width={424} height={98} className="w-full h-full object-contain group-hover:hidden" />
-                <Image src="/apply-btn.png" alt="Click Here to Apply" width={424} height={98} className="w-full h-full object-contain hidden group-hover:block" />
+              <Link href="/submissions" className="block" style={{ width: '250px', height: '58px' }}>
+                <Image src="/apply-btn-hover.png" alt="Click Here to Apply" width={424} height={98} className="w-full h-full object-contain" />
               </Link>
               <p
                 className="text-[#FF361D] text-[10px] uppercase tracking-wider mt-2"
@@ -510,9 +508,8 @@ export default function WorldCupPage() {
                   ))}
                 </ul>
 
-                <Link href="/submissions" className="mt-4 group block" style={{ width: '212px', height: '49px' }}>
-                  <Image src="/apply-btn-hover.png" alt="Click Here to Apply" width={424} height={98} className="w-full h-full object-contain group-hover:hidden" />
-                  <Image src="/apply-btn.png" alt="Click Here to Apply" width={424} height={98} className="w-full h-full object-contain hidden group-hover:block" />
+                <Link href="/submissions" className="mt-4 block" style={{ width: '212px', height: '49px' }}>
+                  <Image src="/apply-btn-hover.png" alt="Click Here to Apply" width={424} height={98} className="w-full h-full object-contain" />
                 </Link>
               </div>
             </div>
