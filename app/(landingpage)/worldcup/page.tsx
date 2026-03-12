@@ -120,7 +120,7 @@ export default function WorldCupPage() {
               className="text-[#FF361D] text-[10px] uppercase tracking-wider text-center"
               style={{ fontFamily }}
             >
-              Applications Close March 15, 2026
+              Applications Close March 23, 2026
             </p>
           </div>
 
@@ -135,7 +135,7 @@ export default function WorldCupPage() {
                 className="text-[#FF361D] text-[10px] uppercase tracking-wider mt-2"
                 style={{ fontFamily }}
               >
-                Applications Close March 15, 2026
+                Applications Close March 23, 2026
               </p>
             </div>
             <div className="mr-4 mb-[22px]">
