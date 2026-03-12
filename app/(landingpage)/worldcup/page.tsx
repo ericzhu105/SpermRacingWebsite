@@ -43,7 +43,7 @@ export default function WorldCupPage() {
   const titleFont = leagueGothic.style.fontFamily;
 
   return (
-    <main className="min-h-screen bg-black text-white flex flex-col overflow-x-hidden relative">
+    <main className="min-h-screen bg-black text-white flex flex-col relative">
 
       {/* Global Vertical Grid Lines — hidden on mobile */}
       <div className="hidden md:block absolute top-0 bottom-0 left-16 w-[1px] bg-white/10 z-10 pointer-events-none"></div>
@@ -138,11 +138,11 @@ export default function WorldCupPage() {
                 Applications Close March 15, 2026
               </p>
             </div>
-            <div className="mr-4">
+            <div className="mr-4 mb-[22px]">
               <a href="https://www.youtube.com/watch?v=WumH-msuWzk" target="_blank" rel="noopener noreferrer">
                 <Button
-                  className="rounded-none bg-white text-black hover:bg-white/90 px-8 py-6 uppercase tracking-wider font-bold text-[10px] flex items-center justify-center gap-2"
-                  style={{ fontFamily }}
+                  className="rounded-none bg-white text-black hover:bg-white/90 px-8 uppercase tracking-wider font-bold text-[10px] flex items-center justify-center gap-2"
+                  style={{ fontFamily, height: '58px' }}
                 >
                   <Tv className="w-3 h-3" />
                   Watch Full Video
@@ -195,47 +195,50 @@ export default function WorldCupPage() {
 
       {/* ===== PRIZE SECTION ===== */}
       <section className="relative w-full px-4 md:px-16 border-b border-white/10" style={{ height: 'clamp(423px, 26.5625vw, 510px)' }}>
-        <div className="w-full h-full flex flex-col items-center justify-center text-center">
-          <p
-            className="uppercase tracking-normal mb-2 md:mb-[0.2vw] text-center"
-            style={{ fontFamily: monofonto.style.fontFamily, lineHeight: '161%', letterSpacing: '0%', fontSize: 'clamp(16px, 1.04vw, 20px)', maxWidth: 'clamp(290px, 36.875vw, 708px)' }}
-          >
-            <span className="text-[#DBDBDB]">In 2026, Sperm Racing will be hosting its first World Cup,</span>
-            <br className="hidden md:inline" />
-            <span className="md:hidden"> </span>
-            <span className="text-[#414141]">bringing together athletes from 128 countries to compete for a</span>
-          </p>
-
-          {/* $100,000 Image */}
-          <div className="relative mx-auto mb-[0.05vw]" style={{ width: 'clamp(382px, 36.875vw, 708px)', maxWidth: '95vw' }}>
+        {/* $100,000 Image — centered absolutely, behind text */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div style={{ width: 'clamp(382px, 36.875vw, 708px)', maxWidth: '95vw' }}>
             <Image
               src="/100000.png"
               alt="$100,000 Grand Prize"
-              width={950}
-              height={360}
+              width={1206}
+              height={821}
               className="w-full h-auto"
             />
           </div>
-
-          <p
-            className="uppercase tracking-normal text-right"
-            style={{
-              fontFamily: monofonto.style.fontFamily,
-              lineHeight: '161%',
-              letterSpacing: '0%',
-              color: '#c49a3c',
-              fontSize: 'clamp(16px, 1.04vw, 20px)',
-              width: 'clamp(382px, 36.875vw, 708px)',
-              maxWidth: '95vw',
-            }}
-          >
-            Grand Prize
-          </p>
         </div>
+
+        {/* Text — absolutely positioned at fixed spots, on top */}
+        <p
+          className="absolute z-10 left-1/2 -translate-x-1/2 uppercase tracking-normal text-center"
+          style={{ fontFamily: monofonto.style.fontFamily, lineHeight: '161%', letterSpacing: '0%', fontSize: 'clamp(16px, 1.04vw, 20px)', maxWidth: 'clamp(290px, 36.875vw, 708px)', top: 'clamp(30px, 2.6vw, 50px)' }}
+        >
+          <span className="text-[#DBDBDB]">In 2026, Sperm Racing will be hosting its first World Cup,</span>
+          <br className="hidden md:inline" />
+          <span className="md:hidden"> </span>
+          <span className="text-[#414141]">bringing together athletes from 128 countries to compete for a</span>
+        </p>
+
+        <p
+          className="absolute z-10 left-1/2 -translate-x-1/2 uppercase tracking-normal text-right bottom-[130px] md:bottom-[100px]"
+          style={{
+            fontFamily: monofonto.style.fontFamily,
+            lineHeight: '161%',
+            letterSpacing: '0%',
+            color: '#c49a3c',
+            fontSize: 'clamp(16px, 1.04vw, 20px)',
+            width: 'clamp(382px, 36.875vw, 708px)',
+            maxWidth: '95vw',
+          }}
+        >
+          Grand Prize
+        </p>
       </section>
 
       {/* ===== NAVIGATION TABS ===== */}
-      <section className="w-full">
+      <section className="relative z-0 w-full overflow-visible">
+        {/* Subtle white glow bleeding up from tabs area */}
+        <div className="absolute left-1/2 -translate-x-1/2 -top-[180px] w-[700px] h-[300px] bg-white/[0.08] blur-[100px] rounded-full pointer-events-none"></div>
         <div className="flex items-center justify-center px-4" style={{ height: 'clamp(60px, 5.78vw, 111px)' }}>
           <div className="flex items-center" style={{ width: 'clamp(375px, 28.88vw, 555px)' }}>
             {['Guidelines', 'Brackets', 'Schedule'].map((tab) => {
@@ -765,10 +768,17 @@ export default function WorldCupPage() {
       )}
 
       {activeTab === 'Schedule' && (
-        <section className="w-full py-16 px-8 md:px-24 text-center">
-          <p className="text-white/50 uppercase" style={{ fontFamily: monofonto.style.fontFamily, fontSize: 'clamp(12px, 0.833vw, 16px)' }}>
-            Schedule content coming soon.
-          </p>
+        <section className="w-full py-12 md:py-16 px-4 md:px-16">
+          {/* Desktop: full table image */}
+          <div className="hidden md:flex justify-center">
+            <Image src="/scheduleTable.png" alt="Schedule Table" width={2388} height={993} className="w-full max-w-[1100px] h-auto" />
+          </div>
+          {/* Mobile: 3 stacked card images */}
+          <div className="md:hidden flex flex-col items-center gap-6">
+            <Image src="/matchups.png" alt="Matchups" width={864} height={985} className="w-full max-w-[400px] h-auto" />
+            <Image src="/timelineSchedule.png" alt="Timeline" width={864} height={980} className="w-full max-w-[400px] h-auto" />
+            <Image src="/media.png" alt="Media" width={864} height={980} className="w-full max-w-[400px] h-auto" />
+          </div>
         </section>
       )}
 
@@ -932,21 +942,21 @@ export default function WorldCupPage() {
               }}
             >
               <div
-                className="rounded-full flex items-center gap-3"
+                className="rounded-full flex items-center gap-4"
                 style={{
                   background: 'radial-gradient(ellipse at center, rgba(255,255,255,0.04), rgba(0,0,0,0.9))',
                   boxShadow: 'inset 0 4px 9.2px rgba(255,255,255,0.08)',
-                  paddingLeft: '19px',
-                  paddingRight: '14px',
-                  paddingTop: '6px',
-                  paddingBottom: '6px',
+                  paddingLeft: '28px',
+                  paddingRight: '21px',
+                  paddingTop: '9px',
+                  paddingBottom: '9px',
                 }}
               >
-                <span className="text-white uppercase tracking-wider font-bold" style={{ fontFamily, fontSize: 'clamp(8px, 0.52vw, 10px)' }}>
+                <span className="text-white uppercase tracking-wider font-bold" style={{ fontFamily, fontSize: 'clamp(12px, 0.78vw, 15px)' }}>
                   Apply Now
                 </span>
-                <div className="rounded-md flex items-center justify-center" style={{ width: 'clamp(18px, 1.3vw, 25px)', height: 'clamp(18px, 1.3vw, 25px)', background: 'rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.2)' }}>
-                  <Image src="/sperm-icon.png" alt="" width={14} height={14} className="object-contain" />
+                <div className="rounded-md flex items-center justify-center" style={{ width: 'clamp(27px, 1.95vw, 37px)', height: 'clamp(27px, 1.95vw, 37px)', background: 'rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.2)' }}>
+                  <Image src="/sperm-icon.png" alt="" width={21} height={21} className="object-contain" />
                 </div>
               </div>
             </div>
