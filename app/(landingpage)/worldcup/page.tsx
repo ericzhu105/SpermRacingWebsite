@@ -52,16 +52,29 @@ export default function WorldCupPage() {
       {/* ===== HERO SECTION ===== */}
       <section className="relative w-full h-[100dvh] flex flex-col pt-24 pb-0 overflow-hidden">
 
-        {/* Background Image — object-position center for mobile crop */}
+        {/* Background Video — desktop full, mobile center-cropped */}
         <div className="absolute inset-0 z-0 select-none pointer-events-none">
-          <Image
-            src="/worldcup-hero.webp"
-            alt="World Cup Race Track"
-            fill
-            className="object-cover object-center"
-            priority
-          />
-          <div className="absolute inset-0 bg-black/30"></div>
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            className="hidden md:block absolute inset-0 w-full h-full object-cover"
+          >
+            <source src="/worldcup-hero.mp4" type="video/mp4" />
+          </video>
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            className="md:hidden absolute inset-0 w-full h-full object-cover"
+          >
+            <source src="/worldcup-hero-mobile.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-black/50"></div>
           {/* Top gradient to black on mobile for logo area */}
           <div className="md:hidden absolute top-0 left-0 right-0 h-28 bg-gradient-to-b from-black via-black/80 to-transparent z-[1]"></div>
         </div>
