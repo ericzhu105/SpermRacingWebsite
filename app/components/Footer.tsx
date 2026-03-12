@@ -98,6 +98,7 @@ export default function Footer() {
             <div className="flex flex-col gap-6 w-1/2 md:w-auto">
                 <h3 className="font-bold tracking-widest text-xs uppercase" style={{ fontFamily }}>CONTACT</h3>
                 <div className="flex flex-col gap-3">
+                    <a href="https://discord.gg/zV8s7s73G6" target="_blank" rel="noopener noreferrer" className="text-xs tracking-wider hover:opacity-80 transition-opacity uppercase" style={{ fontFamily }}>DISCORD</a>
                     <a href="mailto:contact@spermracing.com" className="text-xs tracking-wider hover:opacity-80 transition-opacity uppercase" style={{ fontFamily }}>EMAIL</a>
                     <a href="https://www.linkedin.com/company/sperm-racing/" target="_blank" rel="noopener noreferrer" className="text-xs tracking-wider hover:opacity-80 transition-opacity uppercase" style={{ fontFamily }}>LINKEDIN</a>
                 </div>
