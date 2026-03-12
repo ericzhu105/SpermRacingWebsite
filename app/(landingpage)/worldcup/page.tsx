@@ -8,6 +8,7 @@ import { Tv } from 'lucide-react';
 import { League_Gothic } from 'next/font/google';
 import localFont from 'next/font/local';
 import Footer from '@/app/components/Footer';
+import WaitlistSignupForm from '@/app/components/WaitlistSignupForm';
 
 // Load Fonts
 const monoFont = localFont({
@@ -39,6 +40,7 @@ const leagueGothic = League_Gothic({
 
 export default function WorldCupPage() {
   const [activeTab, setActiveTab] = useState('Guidelines');
+  const [showNotifyModal, setShowNotifyModal] = useState(false);
   const fontFamily = monoFont.style.fontFamily;
   const titleFont = leagueGothic.style.fontFamily;
 
@@ -89,8 +91,8 @@ export default function WorldCupPage() {
           {/* Mobile Title — upper area */}
           <div className="md:hidden flex flex-col items-center px-4 pt-[14vh]">
             <h1
-              className="text-center uppercase leading-[0.85] tracking-tight"
-              style={{ fontFamily: titleFont, fontSize: '58.4px' }}
+              className="text-center uppercase leading-[0.85] tracking-tight text-[clamp(36px,13vw,58.4px)]"
+              style={{ fontFamily: titleFont }}
             >
               <span className="text-[#5A8199]">Sperm Racing</span>
               <br />
@@ -121,6 +123,13 @@ export default function WorldCupPage() {
             >
               Applications Close March 23, 2026
             </p>
+            <button
+              onClick={() => setShowNotifyModal(true)}
+              className="text-white/50 hover:text-white uppercase tracking-wider text-[9px] underline underline-offset-2 transition-colors"
+              style={{ fontFamily }}
+            >
+              Get Notified via SMS
+            </button>
           </div>
 
           {/* Desktop: left/right buttons */}
@@ -136,7 +145,14 @@ export default function WorldCupPage() {
                 Applications Close March 23, 2026
               </p>
             </div>
-            <div className="mr-4 mb-[22px]">
+            <div className="mr-4 mb-[22px] flex flex-col items-end gap-3">
+              <button
+                onClick={() => setShowNotifyModal(true)}
+                className="border border-white/20 bg-black/50 backdrop-blur-sm text-white hover:bg-white/10 px-8 uppercase tracking-wider font-bold text-[10px] flex items-center justify-center gap-2 transition-colors"
+                style={{ fontFamily, height: '58px' }}
+              >
+                Get Notified
+              </button>
               <a href="https://www.youtube.com/watch?v=WumH-msuWzk" target="_blank" rel="noopener noreferrer">
                 <Button
                   className="rounded-none bg-white text-black hover:bg-white/90 px-8 uppercase tracking-wider font-bold text-[10px] flex items-center justify-center gap-2"
@@ -195,7 +211,7 @@ export default function WorldCupPage() {
       <section className="relative w-full px-4 md:px-16 border-b border-white/10" style={{ height: 'clamp(423px, 26.5625vw, 510px)' }}>
         {/* $100,000 Image — centered absolutely, behind text */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div style={{ width: 'clamp(382px, 36.875vw, 708px)', maxWidth: '95vw' }}>
+          <div style={{ width: 'clamp(280px, 80vw, 708px)', maxWidth: '95vw' }}>
             <Image
               src="/100000.png"
               alt="$100,000 Grand Prize"
@@ -209,7 +225,7 @@ export default function WorldCupPage() {
         {/* Text — absolutely positioned at fixed spots, on top */}
         <p
           className="absolute z-10 left-1/2 -translate-x-1/2 uppercase tracking-normal text-center"
-          style={{ fontFamily: monofonto.style.fontFamily, lineHeight: '161%', letterSpacing: '0%', fontSize: 'clamp(16px, 1.04vw, 20px)', maxWidth: 'clamp(290px, 36.875vw, 708px)', top: 'clamp(30px, 2.6vw, 50px)' }}
+          style={{ fontFamily: monofonto.style.fontFamily, lineHeight: '161%', letterSpacing: '0%', fontSize: 'clamp(16px, 1.04vw, 20px)', maxWidth: 'clamp(250px, 85vw, 708px)', top: 'clamp(30px, 2.6vw, 50px)' }}
         >
           <span className="text-[#DBDBDB]">In 2026, Sperm Racing will be hosting its first World Cup,</span>
           <br className="hidden md:inline" />
@@ -225,7 +241,7 @@ export default function WorldCupPage() {
             letterSpacing: '0%',
             color: '#c49a3c',
             fontSize: 'clamp(16px, 1.04vw, 20px)',
-            width: 'clamp(382px, 36.875vw, 708px)',
+            width: 'clamp(280px, 80vw, 708px)',
             maxWidth: '95vw',
           }}
         >
@@ -975,6 +991,25 @@ export default function WorldCupPage() {
 
       {/* Footer */}
       <Footer />
+
+      {/* Get Notified Modal */}
+      {showNotifyModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setShowNotifyModal(false)} />
+          <div className="relative bg-[#0A0A0A] border border-white/10 rounded-lg p-6 w-full max-w-[400px] shadow-2xl">
+            <button
+              onClick={() => setShowNotifyModal(false)}
+              className="absolute top-3 right-3 text-white/50 hover:text-white transition-colors"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+            <WaitlistSignupForm showBadge={false} />
+          </div>
+        </div>
+      )}
     </main>
   );
 }

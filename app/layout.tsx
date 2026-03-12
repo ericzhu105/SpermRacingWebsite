@@ -51,10 +51,10 @@ export const metadata: Metadata = {
       "The world's first sperm race. Microscopic competition. Macroscopic stakes.",
     images: [
       {
-        url: '/images/logo/og-image.png',
+        url: '/preview.png',
         width: 1200,
         height: 630,
-        alt: 'Sperm Racing Logo',
+        alt: 'Sperm Racing',
       },
     ],
     siteName: 'Sperm Racing',
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
     title: 'Sperm Racing',
     description:
       "The world's first sperm race. Microscopic competition. Macroscopic stakes.",
-    images: ['/images/logo/og-image.png'],
+    images: ['/preview.png'],
   },
 };
 

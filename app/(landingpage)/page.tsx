@@ -92,6 +92,38 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-black text-white flex flex-col overflow-x-hidden">
+      <style jsx global>{`
+        @keyframes worldcup-glow {
+          0%, 100% { box-shadow: 0 0 8px rgba(255,54,29,0.4), 0 0 20px rgba(255,54,29,0.15); }
+          50% { box-shadow: 0 0 14px rgba(255,54,29,0.6), 0 0 35px rgba(255,54,29,0.25); }
+        }
+        @keyframes worldcup-shimmer {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+        .worldcup-btn {
+          position: relative;
+          overflow: hidden;
+          background: linear-gradient(135deg, #FF361D 0%, #FF6B4A 50%, #FF361D 100%) !important;
+          border: 1px solid rgba(255,54,29,0.5) !important;
+          color: white !important;
+          animation: worldcup-glow 2s ease-in-out infinite;
+        }
+        .worldcup-btn::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+          animation: worldcup-shimmer 2.5s ease-in-out infinite;
+        }
+        .worldcup-btn:hover {
+          background: linear-gradient(135deg, #FF4A33 0%, #FF7A5C 50%, #FF4A33 100%) !important;
+          border-color: rgba(255,54,29,0.8) !important;
+        }
+      `}</style>
       {/* Hero Section - Fixed height 100vh */}
       <section className="relative w-full h-[100dvh] flex flex-col pt-24 pb-0 overflow-hidden border-b border-white/20">
         
@@ -194,9 +226,8 @@ export default function HomePage() {
                     </Dialog>
 
                     <Link href="/worldcup" className="w-full">
-                        <Button className="rounded-none bg-white text-black hover:bg-white/90 px-8 py-6 w-full uppercase tracking-wider font-bold text-[10px] flex items-center justify-center gap-2" style={{ fontFamily }}>
-                            <span className="mb-0.5"><Tv className="w-3 h-3" /></span>
-                            World Cup
+                        <Button className="worldcup-btn rounded-none px-8 py-6 w-full uppercase tracking-wider font-bold text-[10px] flex items-center justify-center gap-2" style={{ fontFamily }}>
+                            <span className="relative z-10 flex items-center gap-2"><Tv className="w-3 h-3" /> World Cup 2026</span>
                         </Button>
                     </Link>
                 </div>
@@ -224,9 +255,8 @@ export default function HomePage() {
             </Dialog>
 
             <Link href="/worldcup" className="w-full">
-                <Button className="rounded-none bg-white text-black hover:bg-white/90 px-8 py-6 w-full uppercase tracking-wider font-bold text-[10px] flex items-center justify-center gap-2" style={{ fontFamily }}>
-                    <span className="mb-0.5"><Tv className="w-3 h-3" /></span>
-                    World Cup
+                <Button className="worldcup-btn rounded-none px-8 py-6 w-full uppercase tracking-wider font-bold text-[10px] flex items-center justify-center gap-2" style={{ fontFamily }}>
+                    <span className="relative z-10 flex items-center gap-2"><Tv className="w-3 h-3" /> World Cup 2026</span>
                 </Button>
             </Link>
         </div>
