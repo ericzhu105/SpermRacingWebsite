@@ -98,7 +98,7 @@ export default function RootLayout({
       >
         <BackgroundProvider>
           <PostHogProvider>
-            <main className="relative">
+            <main className="relative overflow-x-hidden">
               <GlobalBlur />
               {children}
             </main>

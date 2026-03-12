@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import localFont from 'next/font/local';
 import { League_Gothic } from 'next/font/google';
-import supabase from '@/lib/supabaseClient';
+import { Forminit } from 'forminit';
 
 const COUNTRY_CODES = [
   { code: '+1', country: 'US', flag: '🇺🇸', name: 'United States' },
@@ -108,7 +108,7 @@ export default function WaitlistSignupForm({
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   const [countrySearch, setCountrySearch] = useState('');
   const [status, setStatus] = useState<
-    'idle' | 'loading' | 'success' | 'error' | 'duplicate'
+    'idle' | 'loading' | 'success' | 'error'
   >('idle');
   const [error, setError] = useState('');
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -160,38 +160,16 @@ export default function WaitlistSignupForm({
       const cleanPhone = countryCode.code + phone.replace(/\D/g, '').trim();
       const cleanName = name.trim();
 
-      const { data: existing, error: selectError } = await supabase
-        .from('waitlist')
-        .select('id')
-        .eq('email', cleanPhone)
-        .maybeSingle();
+      const forminit = new Forminit({ proxyUrl: '/api/forminit' });
+      const { error: submitError } = await forminit.submit('3yxyuhexo7l', {
+        blocks: [
+          { type: 'sender', properties: { fullName: cleanName, phone: cleanPhone } },
+        ],
+      });
 
-      if (selectError) {
-        throw selectError;
-      }
-
-      if (existing) {
-        setStatus('duplicate');
-        return;
-      }
-
-      // Insert user
-      const { error: insertError } = await supabase
-        .from('waitlist')
-        .insert([
-          {
-            email: cleanPhone,
-            name: cleanName,
-            created_at: new Date().toISOString(),
-          },
-        ]);
-
-      if (insertError) {
-        if (insertError.code === '23505') {
-          setStatus('duplicate');
-        } else {
-          throw insertError;
-        }
+      if (submitError) {
+        setStatus('error');
+        setError(submitError.message || 'Failed to join waitlist. Please try again.');
         return;
       }
 
@@ -364,13 +342,6 @@ export default function WaitlistSignupForm({
           </div>
         )}
 
-        {status === 'duplicate' && (
-          <div className="mt-2">
-            <p className="text-yellow-400 text-sm uppercase text-center" style={{ fontFamily }}>
-              You're already on the waitlist!
-            </p>
-          </div>
-        )}
       </div>
     </div>
   );

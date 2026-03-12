@@ -33,6 +33,7 @@ export default function Navbar() {
   const isWorldCupPage = pathname === '/worldcup';
 
   const navLinks = [
+    { name: 'HOME', href: '/' },
     // { name: 'LIVESTREAM', href: '/races' },
     { name: 'MANIFESTO', href: '/manifesto' },
     { name: 'PROCESS', href: '/methodology' },

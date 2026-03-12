@@ -45,7 +45,7 @@ export default function WorldCupPage() {
   const titleFont = leagueGothic.style.fontFamily;
 
   return (
-    <main className="min-h-screen bg-black text-white flex flex-col relative">
+    <main className="min-h-screen bg-black text-white flex flex-col relative overflow-x-hidden">
 
       {/* Global Vertical Grid Lines — hidden on mobile */}
       <div className="hidden md:block absolute top-0 bottom-0 left-16 w-[1px] bg-white/10 z-10 pointer-events-none"></div>
@@ -207,11 +207,42 @@ export default function WorldCupPage() {
         </div>
       </section>
 
-      {/* ===== PRIZE SECTION ===== */}
-      <section className="relative w-full px-4 md:px-16 border-b border-white/10" style={{ height: 'clamp(423px, 26.5625vw, 510px)' }}>
-        {/* $100,000 Image — centered absolutely, behind text */}
+      {/* ===== PRIZE SECTION — Mobile: stacked flow / Desktop: absolute overlay ===== */}
+      {/* Mobile */}
+      <section className="md:hidden w-full px-4 py-10 border-b border-white/10 flex flex-col items-center gap-2">
+        <p
+          className="uppercase tracking-normal text-center"
+          style={{ fontFamily: monofonto.style.fontFamily, lineHeight: '161%', fontSize: '14px', maxWidth: '85vw' }}
+        >
+          <span className="text-[#DBDBDB]">In 2026, Sperm Racing will be hosting its first World Cup, </span>
+          <span className="text-[#414141]">bringing together athletes from 128 countries to compete for a</span>
+        </p>
+        <div style={{ width: '80vw', maxWidth: '360px' }}>
+          <Image
+            src="/100000.png"
+            alt="$100,000 Grand Prize"
+            width={1206}
+            height={821}
+            className="w-full h-auto"
+          />
+        </div>
+        <p
+          className="uppercase tracking-normal text-right self-end mr-4"
+          style={{
+            fontFamily: monofonto.style.fontFamily,
+            lineHeight: '161%',
+            color: '#c49a3c',
+            fontSize: '14px',
+          }}
+        >
+          Grand Prize
+        </p>
+      </section>
+
+      {/* Desktop */}
+      <section className="hidden md:block relative w-full px-16 border-b border-white/10" style={{ height: 'clamp(423px, 26.5625vw, 510px)' }}>
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div style={{ width: 'clamp(280px, 80vw, 708px)', maxWidth: '95vw' }}>
+          <div style={{ width: 'clamp(400px, 36.875vw, 708px)' }}>
             <Image
               src="/100000.png"
               alt="$100,000 Grand Prize"
@@ -222,27 +253,24 @@ export default function WorldCupPage() {
           </div>
         </div>
 
-        {/* Text — absolutely positioned at fixed spots, on top */}
         <p
           className="absolute z-10 left-1/2 -translate-x-1/2 uppercase tracking-normal text-center"
-          style={{ fontFamily: monofonto.style.fontFamily, lineHeight: '161%', letterSpacing: '0%', fontSize: 'clamp(16px, 1.04vw, 20px)', maxWidth: 'clamp(250px, 85vw, 708px)', top: 'clamp(30px, 2.6vw, 50px)' }}
+          style={{ fontFamily: monofonto.style.fontFamily, lineHeight: '161%', letterSpacing: '0%', fontSize: 'clamp(16px, 1.04vw, 20px)', maxWidth: '708px', top: 'clamp(30px, 2.6vw, 50px)' }}
         >
           <span className="text-[#DBDBDB]">In 2026, Sperm Racing will be hosting its first World Cup,</span>
-          <br className="hidden md:inline" />
-          <span className="md:hidden"> </span>
+          <br />
           <span className="text-[#414141]">bringing together athletes from 128 countries to compete for a</span>
         </p>
 
         <p
-          className="absolute z-10 left-1/2 -translate-x-1/2 uppercase tracking-normal text-right bottom-[130px] md:bottom-[100px]"
+          className="absolute z-10 left-1/2 -translate-x-1/2 uppercase tracking-normal text-right bottom-[100px]"
           style={{
             fontFamily: monofonto.style.fontFamily,
             lineHeight: '161%',
             letterSpacing: '0%',
             color: '#c49a3c',
             fontSize: 'clamp(16px, 1.04vw, 20px)',
-            width: 'clamp(280px, 80vw, 708px)',
-            maxWidth: '95vw',
+            width: 'clamp(400px, 36.875vw, 708px)',
           }}
         >
           Grand Prize
@@ -250,11 +278,11 @@ export default function WorldCupPage() {
       </section>
 
       {/* ===== NAVIGATION TABS ===== */}
-      <section className="relative z-0 w-full overflow-visible">
+      <section className="relative z-0 w-full overflow-hidden">
         {/* Subtle white glow bleeding up from tabs area */}
         <div className="absolute left-1/2 -translate-x-1/2 -top-[180px] w-[700px] h-[300px] bg-white/[0.08] blur-[100px] rounded-full pointer-events-none"></div>
         <div className="flex items-center justify-center px-4" style={{ height: 'clamp(60px, 5.78vw, 111px)' }}>
-          <div className="flex items-center" style={{ width: 'clamp(375px, 28.88vw, 555px)' }}>
+          <div className="flex items-center w-full" style={{ maxWidth: 'clamp(300px, 80vw, 555px)' }}>
             {['Guidelines', 'Brackets', 'Schedule'].map((tab) => {
               const isActive = activeTab === tab;
               return (
@@ -298,7 +326,7 @@ export default function WorldCupPage() {
 
       {/* ===== TAB CONTENT ===== */}
       {activeTab === 'Guidelines' && (<>
-      <section className="w-full py-12 md:py-16 px-6 md:px-24">
+      <section className="w-full py-12 md:py-16 px-6 md:px-24 overflow-x-hidden">
         <div className="w-full space-y-16">
 
           {/* ROW 1: What Is This + Video */}
@@ -312,7 +340,7 @@ export default function WorldCupPage() {
                 className="text-white uppercase mb-4 text-center md:text-left"
                 style={{
                   fontFamily: titleFont,
-                  fontSize: 'clamp(60px, 3.823vw, 73.4px)',
+                  fontSize: 'clamp(36px, 10vw, 73.4px)',
                   lineHeight: '103%',
                   letterSpacing: '0%',
                   fontWeight: 400,
@@ -413,7 +441,7 @@ export default function WorldCupPage() {
                   className="text-white uppercase"
                   style={{
                     fontFamily: titleFont,
-                    fontSize: 'clamp(58.4px, 3.823vw, 73.4px)',
+                    fontSize: 'clamp(36px, 10vw, 73.4px)',
                     lineHeight: '103%',
                     letterSpacing: '0%',
                     fontWeight: 400,
@@ -434,7 +462,7 @@ export default function WorldCupPage() {
                   To apply, you must:
                 </p>
 
-                <ul className="space-y-2.5 self-start">
+                <ul className="space-y-2.5 self-start max-w-full">
                   {[
                     '18 years or older',
                     'Free of sexually transmitted diseases',
@@ -480,7 +508,7 @@ export default function WorldCupPage() {
                   className="text-white uppercase"
                   style={{
                     fontFamily: titleFont,
-                    fontSize: 'clamp(58.4px, 3.823vw, 73.4px)',
+                    fontSize: 'clamp(36px, 10vw, 73.4px)',
                     lineHeight: '103%',
                     letterSpacing: '0%',
                     fontWeight: 400,
@@ -501,7 +529,7 @@ export default function WorldCupPage() {
                   You may not participate if you:
                 </p>
 
-                <ul className="space-y-2.5 self-start">
+                <ul className="space-y-2.5 self-start max-w-full">
                   {[
                     'Are involved with Sperm Racing operations in any way',
                     'Are attempting to manipulate results, selection, or eligibility',
