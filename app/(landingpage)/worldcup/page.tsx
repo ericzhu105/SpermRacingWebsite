@@ -809,17 +809,10 @@ export default function WorldCupPage() {
       )}
 
       {activeTab === 'Schedule' && (
-        <section className="w-full py-12 md:py-16 px-4 md:px-16">
-          {/* Desktop: full table image */}
-          <div className="hidden md:flex justify-center">
-            <Image src="/scheduleTable.png" alt="Schedule Table" width={2388} height={993} className="w-full max-w-[1100px] h-auto" />
-          </div>
-          {/* Mobile: 3 stacked card images */}
-          <div className="md:hidden flex flex-col items-center gap-6">
-            <Image src="/matchups.png" alt="Matchups" width={864} height={985} className="w-full max-w-[400px] h-auto" />
-            <Image src="/timelineSchedule.png" alt="Timeline" width={864} height={980} className="w-full max-w-[400px] h-auto" />
-            <Image src="/media.png" alt="Media" width={864} height={980} className="w-full max-w-[400px] h-auto" />
-          </div>
+        <section className="w-full py-16 px-8 md:px-24 text-center">
+          <p className="text-white/50 uppercase" style={{ fontFamily: monofonto.style.fontFamily, fontSize: 'clamp(12px, 0.833vw, 16px)' }}>
+            Schedule coming soon.
+          </p>
         </section>
       )}
 
